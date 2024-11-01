@@ -2,11 +2,11 @@
 # https://github.com/theme-particlex/hexo-theme-particlex
 
 # Avatar image
-avatar: /images/avatar.jpg
+avatar: /images/avatar.png
 
 # Home page background image
 background:
-    - /images/background.jpg
+    - /images/123634360_p0.png
 
 # Loading image
 loading: /images/loading.gif
@@ -36,24 +36,24 @@ menu:
         name: box-archive
         theme: solid
         link: /archives
-    Categories:
-        name: bookmark
-        theme: solid
-        link: /categories
-    Tags:
-        name: tags
-        theme: solid
-        link: /tags
+    #Categories:
+    #    name: bookmark
+    #    theme: solid
+    #    link: /categories
+    #Tags:
+     #   name: tags
+      #  theme: solid
+       # link: /tags
 
 # Side info card
 card:
     enable: true
     description: |
         Description
-        ...
+        我不神秘，只是不知道要写什么
     iconLinks:
     friendLinks:
-        Argvchs: https://argvchs.github.io
+        Github: https://github.com/kmizmal
 
 # Footer info
 footer:
@@ -91,7 +91,7 @@ crypto:
 
 # Search
 search:
-    enable: false
+    enable: true
 
 # giscus
 # https://github.com/giscus/giscus
