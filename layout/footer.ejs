@@ -10,7 +10,7 @@
         </div>
         <div>
             Based on the <a href="https://hexo.io">Hexo Engine</a> &amp;
-            <a href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+            <a href="https://github.com/kmizmal/hexo-theme-particlex">ParticleX Theme</a>
         </div>
         <% if (theme.footer.ICP.enable) { %>
         <div>
@@ -21,6 +21,37 @@
             <%= theme.footer.ICP.code %>
             <% } %>
         </div>
+        
         <% } %>
+        <% if (theme.footer.visitors.enable) { %>
+        <div class="visitors">
+            本站访问次数:<span id="finicount_views"></span>
+            <script async src="//finicounter.eu.org/finicounter.js"></script>
+        </div>
+        <% } %>
+        <% if (theme.footer.game_card.enable) { %>
+            <div>
+                <a href="https://hoyocard.qhy04.com">
+                    <% if (theme.footer.game_card.more) { %>
+                   <img id="game_card" src="https://hoyocard.qhy04.com/<%- theme.footer.game_card.game %>/detail/<%- theme.footer.game_card.background %>/<%- theme.footer.game_card.id %>.png" alt="玩原神的这辈子有了">
+                   <% } else  { %>
+                    <img id="game_card" src="https://hoyocard.qhy04.com/<%- theme.footer.game_card.game %>/<%- theme.footer.game_card.background %>/<%- theme.footer.game_card.id %>.png" alt="玩原神的这辈子有了">
+                    <% }%> 
+                </a>
+            </div>
+            
+            <% } %>
     </div>
+    <script>
+        //简单的重构标题ID
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
+        let text = el.textContent.trim().toLowerCase();
+        // 简单清理，去除标点
+        let newId = text.replace(/[。，、“”‘’·\[\]()《》~（）!！?？"':：;；&]/g, '').replace(/\s+/g, '-');
+        el.id = newId;
+        // 同时更新标题内的跳转链接（如果有）
+        let a = el.querySelector('a.headerlink');
+        if (a) a.href = '#' + newId;
+      });
+      </script>
 </footer>

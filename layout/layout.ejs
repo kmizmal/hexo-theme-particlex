@@ -5,6 +5,7 @@
     if (is_category() || page.type === "categories") type = "categories";
     if (is_tag() || page.type === "tags") type = "tags";
     if (is_archive()) type = "archives";
+    
     let title = page.title + " | " + config.title;
     if (is_home()) title = config.title;
     if (is_post() || is_page()) title = page.title + " | " + config.title;
@@ -26,23 +27,53 @@
     />
     <link rel="icon" href="<%- url_for(theme.avatar) %>" />
     <%- partial("import", { type }) %>
+    <style>
+        body {
+            cursor: url('<%- url_for(theme.arrow) %>'), auto;
+        }
+    </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        (function (w, d) {
+            let domDiv = d.createElement('div');
+
+            domDiv.style.cssText = 'position: fixed; top: 0; left: 0; width: 0; height: 3px;' +
+                'box-shadow: 0 0 3px #999; background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet );z-index: 999999;-webkit-transition:width .3s linear;';
+
+            d.body.appendChild(domDiv);
+
+            var domH = w.innerHeight || d.documentElement.clientHeight || d.body.clientHeight;
+
+            w.addEventListener('scroll', function () {
+                domDiv.style.width = Math.round(pageYOffset / (d.body.offsetHeight - domH) * 100) + '%';
+            }, false);
+        })(window, document);
+    });
+</script>
+
 </head>
 <body>
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="<%- url_for(theme.loading) %>" />
                 </div>
+                <div id="loading-toast"><h2 :id="null">LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="<%- url_for(theme.loading) %>" /></div>
             </div>
         </transition>
-        <%- partial("menu") %>
+        <%- partial("menu", {}, {cache: true}) %>
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <%- partial(type) %>
-            <%- partial("footer") %>
+            <%- partial("footer"), {}, {cache: true} %>
         </div>
+        <% if (theme.TopIndex.enable) { %>
+            <script src="<%- url_for('/js/TopIndex.js') %>"></script>
+        <% } %>
+        <% if (theme.Background_particles.enable) { %>
+            <script src="<%- url_for('/js/canvas.js') %>"></script>
+        <% } %>
         <% if (theme.preview.enable) { %>
         <transition name="fade">
             <div id="preview" ref="preview" v-show="previewShow">
@@ -51,9 +82,13 @@
         </transition>
         <% } %>
     </div>
-    <script src="<%- url_for("/js/main.js") %>"></script>
+    <script src='<%- url_for("/js/main.js") %>'></script>
     <% if (type === "post" && page.comments) { %>
-    <%- partial("comment") %>
+    <%- partial("comment", {}, {cache: true}) %>
+    <% } %>
+
+    <% if (theme.span.enable) { %>
+    <script src="<%- url_for('/js/span.js') %>"></script>
     <% } %>
 </body>
 </html>

@@ -11,7 +11,7 @@
             prev = colors[id];
         %>
         <span>
-            <a href="<%- url_for(tag.path) %>" style="background: <%- colors[id] %>">
+            <a href="<%- url_for(tag.path) %>" style='background: <%- colors[id] %>'>
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -58,7 +58,7 @@
                             let id = Math.floor(Math.random() * colors.length);
                             prev = colors[id];
                         %>
-                        <a href="<%- url_for(tag.path) %>" style="color: <%- colors[id] %>">
+                        <a href='<%- url_for(tag.path) %>' style="color: <%- colors[id] %>">
                             <%= tag.name %>
                         </a>
                     </span>

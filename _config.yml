@@ -1,12 +1,14 @@
 # ParticleX Configuration
 # https://github.com/theme-particlex/hexo-theme-particlex
 
-# Avatar image
+# Avatar image 
 avatar: /images/avatar.png
+
+arrow: /images/Arrow.ico
 
 # Home page background image
 background:
-    - /images/123634360_p0.png
+    - /images/brackgroud.jpg
 
 # Loading image
 loading: /images/loading.gif
@@ -22,8 +24,19 @@ colors:
 # ParticleX theme icon is adopts the Font Awesome 6
 # https://fontawesome.com
 
+#文字点击特效
+span: 
+    enable: true
+#顶部进度条
+TopIndex:
+    enable: true
+# 背景粒子特效
+Background_particles: 
+    enable: true
+
 # Main menu navigation
 menu:
+    
     Home:
         name: house
         theme: solid
@@ -40,17 +53,17 @@ menu:
     #    name: bookmark
     #    theme: solid
     #    link: /categories
-    #Tags:
-     #   name: tags
-      #  theme: solid
-       # link: /tags
+    Tags:
+       name: tags
+       theme: solid
+       link: /tags
+    
 
 # Side info card
 card:
     enable: true
     description: |
-        Description
-        我不神秘，只是不知道要写什么
+        总能在平凡的日子里发现无数温暖的惊喜
     iconLinks:
     friendLinks:
         Github: https://github.com/kmizmal
@@ -60,10 +73,19 @@ footer:
     since: 2022
     # Customize the server domain name ICP
     ICP:
-        enable: false
-        code:
-        link:
-
+        enable: true
+        code: 萌ICP备20250124号
+        link: https://icp.gov.moe/?keyword=20250124
+    # 米哈游玩家信息卡片 https://hoyocard.qhy04.com
+    game_card:
+        #  https://hoyocard.qhy04.com/gs/rand/288292888.png
+        enable: true
+        game: gs
+        more: true
+        background: rand
+        id: 288292888
+    visitors:
+        enable: true
 # Polyfill
 # https://polyfill.io
 polyfill:

@@ -1,9 +1,5 @@
 # Hexo-Theme-ParticleX
 
-[ParticleX](https://github.com/theme-particlex/hexo-theme-particlex) 主题，诞生原因是因为原来的 [Particle](https://github.com/korilin/hexo-theme-particle) 主题不维护了，但是我觉得还是很好的。
-
-原来用的是 Vue 2 + Ant Design Vue 1，现更新到 Vue 3，去除 Ant Design Vue 采用自定义样式，图标更改为 Font Awesome 6，CDN 改为 ZStatic。
-
 原项目 `README.md` 里说：
 
 > 目前有 Full、Night 和 Maiden **两个**主题样式。
@@ -12,15 +8,15 @@
 
 # 1. 演示
 
--   [GitHub Pages](https://argvchs.github.io)
+-   [GitHub Pages](https://kmizmal.github.io/)
 -   [Netlify](https://argvchs.netlify.app)
--   [Vercel](https://argvchs.vercel.app)
+-   [Vercel](https://zmal-blog.vercel.app/)
 
 # 2. 安装
 
 ```bash
-cd themes
-git clone https://github.com/theme-particlex/hexo-theme-particlex.git particlex --depth=1
+git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
+pnpm add hexo-renderer-sass-next
 ```
 
 然后在根目录 `_config.yml` 设置主题为 ParticleX 即可。
@@ -70,6 +66,8 @@ archive_generator:
 修改完请 `hexo cl` 清除缓存。
 
 # 3. 配置
+
+> 请参考目录下的`_config.yml.exmple`填写`_config.yml`
 
 ## 3.1. 基本配置
 
@@ -162,6 +160,16 @@ footer:
         enable: false
         code:
         link:
+    #详细参数见 https://hoyocard.qhy04.com/
+    game_card:
+        enable: true
+        game: gs  #游戏简写
+        more: false   #更详细的卡片
+        background: rand  #背景图片
+        id:   #米游社id
+    #是否开启访问亮统计 https://finicounter.eu.org/
+    visitors:
+        enable: true
 ```
 
 ## 3.3. 功能配置

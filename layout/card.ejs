@@ -3,31 +3,53 @@
         <div class="avatar">
             <img src="<%- url_for(theme.avatar) %>" alt="avatar" />
         </div>
-        <div class="name"><%= config.author %></div>
+        <div class="name">
+            <%= config.author %>
+        </div>
         <div class="description">
             <%- markdown(theme.card.description) %>
         </div>
+
         <% if (theme.card.iconLinks) { %>
-        <div class="icon-links">
-            <% Object.entries(theme.card.iconLinks).forEach(([key, value]) => { %>
-            <span class="icon-link">
-                <a href="<%- url_for(value.link) %>">
-                    <i
-                        class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw"
-                    ></i>
-                </a>
-            </span>
-            <% }); %>
-        </div>
-        <% } %>
-        <% if (theme.card.friendLinks) { %>
-        <div class="friend-links">
-            <% Object.entries(theme.card.friendLinks).forEach(([key, value]) => { %>
-            <div class="friend-link">
-                <a href="<%- url_for(value) %>"><%= key %></a>
+            <div class="icon-links">
+                <% Object.entries(theme.card.iconLinks).forEach(([key, value])=> { %>
+                    <span class="icon-link">
+                        <a href="<%- url_for(value.link) %>">
+                            <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw"></i>
+                        </a>
+                    </span>
+                    <% }); %>
             </div>
-            <% }); %>
-        </div>
-        <% } %>
+            <% } %>
+                <% if (theme.card.friendLinks) { %>
+                    <div class="friend-links">
+                        <% Object.entries(theme.card.friendLinks).forEach(([key, value])=> { %>
+                            <div class="friend-link">
+                                <a href="<%- url_for(value) %>">
+                                    <%= key %>
+                                </a>
+                            </div>
+                            <% }); %>
+                    </div>
+                    <div class="hitokoto">
+
+                        <p id="hitokoto">
+                            <a href="#" id="hitokoto_text">一言获取中~</a>
+                        </p>
+                    </div>
+                    
+                    <script>
+                        fetch('https://v1.hitokoto.cn')
+                            .then(response => response.json())
+                            .then(data => {
+                                const hitokoto = document.querySelector('#hitokoto_text')
+                                hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+                                hitokoto.innerText = data.hitokoto
+                            })
+                            .catch(console.error)
+                    </script>
     </div>
+        <% } %>
+</div>
+
 </div>
