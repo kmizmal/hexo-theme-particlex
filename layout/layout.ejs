@@ -26,6 +26,34 @@
     />
     <link rel="icon" href="<%- url_for(theme.avatar) %>" />
     <%- partial("import", { type }) %>
+    <script src="<%- url_for('/js/jquery-3.7.1.js') %>"></script>
+    <style>
+        
+        body {
+            cursor: url('<%- url_for(theme.arrow) %>'), auto;
+        }
+
+    </style>
+
+<script>
+    (function (w, d) {
+        var domDiv = d.createElement('div');
+
+        domDiv.style.cssText = 'position: fixed; top: 0; left: 0; width: 0; height: 3px;' +
+            'box-shadow: 0 0 3px #999; background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet );z-index: 999999;-webkit-transition:width .3s linear;'
+
+        d.body.appendChild(domDiv);
+
+        var domH = w.innerHeight || d.documentElement.clientHeight || d.body.clientHeight;
+
+        w.addEventListener('scroll', function () {
+            var divsw = domDiv.style.width = Math.round(pageYOffset / (d.body.offsetHeight - domH) *
+                100) + '%';
+        }, false);
+    })(window, document);
+</script>
+
+
 </head>
 <body>
     <div id="layout">

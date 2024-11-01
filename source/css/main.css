@@ -1,3 +1,4 @@
+
 #archives {
     margin: auto;
     margin-top: 100px;
@@ -434,7 +435,8 @@
 #menu.menu-color #mobile-menu .title {
     color: #fff;
 }
-#preview {
+
+/* #preview {
     align-items: center;
     background-color: #fffc;
     display: flex;
@@ -445,7 +447,8 @@
     top: 0;
     width: 100vw;
     z-index: 1005;
-}
+} */
+
 #preview-content {
     box-shadow: 0 0 50px 10px #d9d9d980;
     margin: auto;
@@ -972,4 +975,16 @@ ol li {
     ol {
         padding-left: 20px;
     }
+}
+
+
+.quote {
+    position: absolute;
+    z-index: 9999;
+    font-weight: bold;
+    opacity: 1;
+    transition: transform 1.5s ease, opacity 1.5s ease;
+    font-size: 0.4rem;
+    font-weight: normal;
+
 }

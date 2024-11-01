@@ -5,8 +5,9 @@
         </div>
         <div class="name"><%= config.author %></div>
         <div class="description">
-            <%- markdown(theme.card.description) %>
+            <%- markdown(theme.card.description) %>           
         </div>
+        
         <% if (theme.card.iconLinks) { %>
         <div class="icon-links">
             <% Object.entries(theme.card.iconLinks).forEach(([key, value]) => { %>
@@ -27,6 +28,21 @@
                 <a href="<%- url_for(value) %>"><%= key %></a>
             </div>
             <% }); %>
+        </div>
+        <div class="hitokoto"></div>
+        <p id="hitokoto">
+            <a href="#" id="hitokoto_text">一言获取中~</a>
+          </p>
+          <script>
+            fetch('https://v1.hitokoto.cn')
+              .then(response => response.json())
+              .then(data => {
+                const hitokoto = document.querySelector('#hitokoto_text')
+                hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+                hitokoto.innerText = data.hitokoto
+              })
+              .catch(console.error)
+          </script>
         </div>
         <% } %>
     </div>

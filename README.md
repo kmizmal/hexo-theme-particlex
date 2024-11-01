@@ -8,15 +8,14 @@
 
 # 1. 演示
 
--   [GitHub Pages](https://argvchs.github.io)
+-   [GitHub Pages](https://kmizmal.github.io/)
 -   [Netlify](https://argvchs.netlify.app)
--   [Vercel](https://argvchs.vercel.app)
+-   [Vercel](https://zmal-blog.vercel.app/)
 
 # 2. 安装
 
 ```bash
-cd themes
-git clone https://github.com/theme-particlex/hexo-theme-particlex.git particlex --depth=1
+git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
 ```
 
 然后在根目录 `_config.yml` 设置主题为 ParticleX 即可。

@@ -4,6 +4,8 @@
 # Avatar image
 avatar: /images/avatar.png
 
+arrow: /images/Arrow.ico
+
 # Home page background image
 background:
     - /images/123634360_p0.png
