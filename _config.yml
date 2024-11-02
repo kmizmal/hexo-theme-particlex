@@ -8,7 +8,7 @@ arrow: /images/Arrow.ico
 
 # Home page background image
 background:
-    - /images/123634360_p0.png
+    - /images/brackgroud.jpg
 
 # Loading image
 loading: /images/loading.gif
