@@ -205,11 +205,11 @@ $("body").click(function(e) {
     const rotationAngle = Math.floor(Math.random() * 81) - 40; // [-40, 40]
     const disappearTime = Math.random() * 2.2 + 0.8; // [0.8, 3] 秒
 
-
-    // 设置初始旋转和缩放
+    // 设置初始旋转和缩放，并提示浏览器优化
     $quoteElement.css({
-        "transform": `rotate(${rotationAngle}deg) scale(1.5)`,
-        "transition": `transform ${disappearTime}s ease, opacity ${disappearTime}s ease`
+        "transform": `rotate(${rotationAngle}deg) scale(2.5)`,
+        "transition": `transform ${disappearTime}s ease, opacity ${disappearTime}s ease`,
+        "will-change": "transform, opacity"
     });
 
     // 使用 requestAnimationFrame 确保样式更新
@@ -217,9 +217,11 @@ $("body").click(function(e) {
         // 确保旋转动画生效后再触发消失动画
         setTimeout(() => {
             $quoteElement.css({
-                "opacity": 0 // 使元素渐隐
+                "opacity": 0, // 使元素渐隐
+                "transform" : `translate(50px,-100px) scale(0.5) rotate(${rotationAngle/2}deg)`, // 使元素缩小并上移
+                //"transition": "transform 1s ease, opacity 1s ease" // 使元素缩小并上移
             });
-        }, 10); // 确保过渡生效
+        }, 10); 
     });
 
     // 动画结束后移除元素
