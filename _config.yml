@@ -62,9 +62,9 @@ footer:
     since: 2022
     # Customize the server domain name ICP
     ICP:
-        enable: false
-        code:
-        link:
+        enable: true
+        code: 萌ICP备20250124号
+        link: https://icp.gov.moe/?keyword=20250124
 
 # Polyfill
 # https://polyfill.io
