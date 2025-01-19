@@ -23,7 +23,7 @@ mixins.highlight = {
                 }
                 i.innerHTML = `
                 <div class="code-content hljs">${highlighted}</div>
-                <div class="language">${language}</div>
+                <div class="language">${language.replace("language-", "")}</div>
                 <div class="copycode">
                     <i class="fa-solid fa-copy fa-fw"></i>
                     <i class="fa-solid fa-check fa-fw"></i>

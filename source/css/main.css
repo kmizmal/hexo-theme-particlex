@@ -435,18 +435,6 @@
   color: #fff;
 }
 
-/* #preview {
-    align-items: center;
-    background-color: #fffc;
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    z-index: 1005;
-} */
 
 #preview-content {
   box-shadow: 0 0 50px 10px #d9d9d980;
