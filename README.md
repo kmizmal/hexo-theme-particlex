@@ -157,6 +157,13 @@ footer:
         enable: false
         code:
         link:
+    #详细参数见 https://hoyocard.qhy04.com/
+    game_card:
+        enable: true
+        game: gs  #游戏简写
+        more: false   #更详细的卡片
+        background: rand  #背景图片
+        id:   #米游社id
 ```
 
 ## 3.3. 功能配置
