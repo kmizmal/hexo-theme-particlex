@@ -24,8 +24,19 @@ colors:
 # ParticleX theme icon is adopts the Font Awesome 6
 # https://fontawesome.com
 
+#文字点击特效
+span: 
+    enable: true
+#顶部进度条
+TopIndex:
+    enable: true
+# 背景粒子特效
+Background_particles: 
+    enable: true
+
 # Main menu navigation
 menu:
+    
     Home:
         name: house
         theme: solid
@@ -46,6 +57,7 @@ menu:
      #   name: tags
       #  theme: solid
        # link: /tags
+    
 
 # Side info card
 card:
