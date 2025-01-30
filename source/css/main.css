@@ -473,6 +473,7 @@
   margin-right: 10px;
 }
 .code-content {
+  margin-top: 2.5rem;
   font-size: 13px;
   line-height: 2;
   overflow: auto;
@@ -525,12 +526,25 @@ body::-webkit-scrollbar-track {
 .hljs-ln-code {
   padding-left: 20px !important;
 }
-.hljs-ln-numbers {
+.hljs-line-numbers {
   border-right: 1px solid #ccc;
   color: #ccc;
   padding-right: 10px !important;
   text-align: right;
   vertical-align: top;
+  min-width: 2.5em; /* 确保行号列宽度 */
+}
+.language {
+  background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 1px 1px 0.75rem #ed6ea14d;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  left: 30px;
+  padding: 10px 15px;
+  position: absolute;
+  top: 0;
 }
 .icon {
   color: #5c6b72;
@@ -568,18 +582,7 @@ body::-webkit-scrollbar-track {
 .katex {
   white-space: normal !important;
 }
-.language {
-  background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
-  border-radius: 0 0 10px 10px;
-  box-shadow: 1px 1px 0.75rem #ed6ea14d;
-  color: #fff;
-  font-size: 12px;
-  font-weight: bold;
-  left: 30px;
-  padding: 10px 15px;
-  position: absolute;
-  top: 0;
-}
+
 .page-num,
 .icon-link a,
 .friend-link a {
@@ -1006,4 +1009,7 @@ pre tr td::selection{
   transition: transform 0.1s ease-out;
   position: absolute;
   /* transform: translate(-50%, -50%); */
+}
+#game_card {
+  max-width: 95%;
 }
