@@ -2,7 +2,7 @@ mixins.highlight = {
     data() {
         return {
             copying: false,
-            supportedLanguages: ['bash', 'javascript', 'python', 'html', 'css','bat']
+            supportedLanguages: ['bash', 'javascript', 'python', 'html', 'css','batch']
         };
     },
     created() {
