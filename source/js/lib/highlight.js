@@ -2,7 +2,7 @@ mixins.highlight = {
     data() {
         return {
             copying: false,
-            supportedLanguages: ['bash', 'javascript', 'python', 'html', 'css']
+            supportedLanguages: ['bash', 'javascript', 'python', 'html', 'css','bat']
         };
     },
     created() {
@@ -32,10 +32,11 @@ mixins.highlight = {
 
                 if (!hljs.getLanguage(language)) {
                     try {
-                        const langModule = await import(`https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/languages/${language}.min.js`);
+                        // const langModule = await import(`https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/languages/${language}.min.js`);
+                        const langModule = await import(`https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/es/languages/${language}.min.js`);
                         hljs.registerLanguage(language, langModule.default);
                     } catch {
-                        console.warn(`Language ${language} not supported`);
+                        console.debug(`Language ${language} not supported,将作为普通文本处理`);
                     }
                 }
 
