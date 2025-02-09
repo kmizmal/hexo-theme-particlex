@@ -85,6 +85,8 @@ footer:
         more: true
         background: rand
         id: 288292888
+    visitors:
+        enable: true
 # Polyfill
 # https://polyfill.io
 polyfill:

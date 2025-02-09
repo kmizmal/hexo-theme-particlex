@@ -164,6 +164,9 @@ footer:
         more: false   #更详细的卡片
         background: rand  #背景图片
         id:   #米游社id
+    #是否开启访问亮统计 https://finicounter.eu.org/
+    visitors:
+        enable: true
 ```
 
 ## 3.3. 功能配置

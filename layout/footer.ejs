@@ -23,7 +23,12 @@
         </div>
         
         <% } %>
-
+        <% if (theme.footer.visitors.enable) { %>
+        <div class="visitors">
+            本站访问次数:<span id="finicount_views"></span>
+            <script async src="//finicounter.eu.org/finicounter.js"></script>
+        </div>
+        <% } %>
         <% if (theme.footer.game_card.enable) { %>
             <div>
                 <a href="https://hoyocard.qhy04.com">
