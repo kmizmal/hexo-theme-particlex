@@ -4,10 +4,10 @@
     </div>
     <div class="info">
         <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
+            <span class="icon"><i class="fa-solid fa-calendar fa-fw"></i></span>
             <%= date(page.date, "YYYY/M/D") %>
+            <span class="icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <%= date(page.updated, "YYYY/M/D") %>
         </span>
         <% if (page.categories && page.categories.data.length !== 0) { %>
         <span class="category">

@@ -13,6 +13,44 @@
     if (is_archive()) title = "Archives | " + config.title;
 %>
 <!DOCTYPE html>
+<!-- <%
+    // 使用短路运算合并重复判断
+    const isPostPage = is_post() || is_page();
+    const isCategoryPage = is_category() || page.type === "categories";
+    const isTagPage = is_tag() || page.type === "tags";
+
+    // 按页面类型优先级排序判断
+    let type = (() => {
+        if (is_home()) return "index";
+        if (isPostPage) return "post";
+        if (isCategoryPage) return "categories";
+        if (isTagPage) return "tags"; 
+        if (is_archive()) return "archives";
+        return "post"; // 默认值
+    })();
+
+    // 标题生成使用策略模式
+    const titleStrategies = {
+        home: () => config.title,
+        post: () => `${page.title} | ${config.title}`,
+        category: () => `Categories: ${page.category} | ${config.title}`,
+        tag: () => `Tags: ${page.tag} | ${config.title}`,
+        archive: () => `Archives | ${config.title}`
+    };
+
+    let title = (() => {
+    switch (type) {
+        case "index": return config.title;
+        case "post": return `${page.title} | ${config.title}`;
+        case "categories": return `Categories: ${page.category} | ${config.title}`;
+        case "tags": 
+            const tag = page.tag || page.title; 
+            return `Tags: ${tag} | ${config.title}`;
+        case "archives": return `Archives | ${config.title}`;
+        default: return `${page.title} | ${config.title}`;
+  }
+})();
+%> -->
 <html lang="<%- config.language %>">
 <head>
     <meta charset="utf-8" />

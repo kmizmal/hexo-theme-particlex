@@ -308,6 +308,7 @@
   line-height: 1.7;
 }
 #home-posts .post-title {
+  font-size: 2.5rem;
   color: #66afef;
   text-align: center;
 }
@@ -490,10 +491,14 @@ body::-webkit-scrollbar-track {
 .content img,
 .content video,
 .content audio,
+.content table,
 .content iframe {
   display: block;
-  margin: 15px auto;
-  max-width: 75%;
+  margin: .5rem auto;
+  max-width: 80%;
+  
+  table-layout: fixed; /* 均匀分配列宽 */
+  /* border-collapse: collapse; */
 }
 .copycode {
   color: #5c6b72;
@@ -703,7 +708,7 @@ code {
   line-height: 2.5;
   padding: 4px 8px;
 }
-h1,
+/* h1,
 h2,
 h3,
 h4,
@@ -731,7 +736,8 @@ h5 {
 }
 h6 {
   font-size: 15px;
-}
+} */
+
 hr {
   border-style: dashed none none;
   border-width: 1.5px;
@@ -771,7 +777,9 @@ code,
   font-family: "Fira Code", "Noto Sans SC", monospace;
 }
 table:not(.hljs-ln) {
-  margin: 15px 0;
+  /* margin: 15px 0; */
+  overflow-x: auto; /* 水平滚动 */
+  -webkit-overflow-scrolling: touch; /* 平滑滚动（iOS优化） */
 }
 table:not(.hljs-ln) td:nth-child(even) {
   background: #c7e0fb4d;
@@ -897,6 +905,17 @@ ol li {
   }
 }
 @media (max-width: 900px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: auto;
+    font-weight: bold;
+    margin: 15px 0;
+    word-break: keep-all;
+  }
   #home-head #home-info {
     height: 350px;
     width: 350px;
