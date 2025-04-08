@@ -63,8 +63,7 @@ menu:
 card:
     enable: true
     description: |
-        Description
-        我不神秘，只是不知道要写什么
+        总能在平凡的日子里发现无数温暖的惊喜
     iconLinks:
     friendLinks:
         Github: https://github.com/kmizmal

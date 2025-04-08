@@ -5,6 +5,7 @@
     if (is_category() || page.type === "categories") type = "categories";
     if (is_tag() || page.type === "tags") type = "tags";
     if (is_archive()) type = "archives";
+    
     let title = page.title + " | " + config.title;
     if (is_home()) title = config.title;
     if (is_post() || is_page()) title = page.title + " | " + config.title;
@@ -27,11 +28,9 @@
     <link rel="icon" href="<%- url_for(theme.avatar) %>" />
     <%- partial("import", { type }) %>
     <style>
-        
         body {
             cursor: url('<%- url_for(theme.arrow) %>'), auto;
         }
-
     </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -52,7 +51,6 @@
     });
 </script>
 
-
 </head>
 <body>
     <div id="layout">
@@ -65,10 +63,10 @@
                 </div>
             </div>
         </transition>
-        <%- partial("menu") %>
+        <%- partial("menu", {}, {cache: true}) %>
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <%- partial(type) %>
-            <%- partial("footer") %>
+            <%- partial("footer"), {}, {cache: true} %>
         </div>
         <% if (theme.TopIndex.enable) { %>
             <script src="<%- url_for('/js/TopIndex.js') %>"></script>
@@ -84,7 +82,7 @@
         </transition>
         <% } %>
     </div>
-    <script src="<%- url_for("/js/main.js") %>"></script>
+    <script src='<%- url_for("/js/main.js") %>'></script>
     <% if (type === "post" && page.comments) { %>
     <%- partial("comment") %>
     <% } %>
