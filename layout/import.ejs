@@ -12,18 +12,18 @@
 <% if (theme.polyfill.enable) { %>
 <script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=<%- theme.polyfill.features %>"></script>
 <% } %>
-<!-- 移除旧的 highlight.js 11.7.0 -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/highlight.min.js"></script> -->
 
 <% if (theme.highlight.enable) { %>
+    
+<!-- 主题样式 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <!-- highlight.js 核心 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js defer"></script>
 
 <!-- 行号插件 -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script> -->
 
-<!-- 主题样式 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
 <script src="<%- url_for('/js/lib/highlight.js') %>"></script>
 <% } %>
 <% if (theme.math.enable) { %>
@@ -60,4 +60,3 @@
 <script src="<%- url_for('/js/lib/home.js') %>"></script>
 <% } %>
 <link rel="stylesheet" href="<%- url_for("/css/main.css") %>" />
-

@@ -16,6 +16,7 @@
 
 ```bash
 git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
+pnpm add hexo-renderer-sass
 ```
 
 然后在根目录 `_config.yml` 设置主题为 ParticleX 即可。

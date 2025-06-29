@@ -1,3 +1,3 @@
 git add .
-git commit -m "优化首页背景图"
+git commit -m "部分优化"
 git push
