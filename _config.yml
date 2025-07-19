@@ -93,11 +93,10 @@ polyfill:
     features:
         - default
 
-# Highlight.js
-# https://highlightjs.org
-highlight:
+prismjs:
     enable: true
-    style: github
+    theme: prism-tomorrow
+    lineNumbers: true
 
 # KaTeX math rendering
 math:

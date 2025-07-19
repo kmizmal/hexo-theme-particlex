@@ -1,57 +1,75 @@
 <footer id="footer">
     <div id="footer-wrap">
-        <div>
-            &copy;
-            <%= theme.footer.since %> - <%= date(Date.now(), "YYYY") %> <%= config.title %>
-            <span id="footer-icon">
-                <i class="fa-solid fa-font-awesome fa-fw"></i>
-            </span>
-            &commat;<%= config.author %>
-        </div>
-        <div>
-            Based on the <a href="https://hexo.io">Hexo Engine</a> &amp;
-            <a href="https://github.com/kmizmal/hexo-theme-particlex">ParticleX Theme</a>
-        </div>
-        <% if (theme.footer.ICP.enable) { %>
-        <div>
-            备案号：
-            <% if (theme.footer.ICP.link) { %>
-            <a href="<%- url_for(theme.footer.ICP.link) %>"><%= theme.footer.ICP.code %></a>
-            <% } else { %>
-            <%= theme.footer.ICP.code %>
-            <% } %>
-        </div>
-        
+      <div>
+        &copy;
+        <%= theme.footer.since %> - <%= date(Date.now(), "YYYY") %> <%= config.title %>
+        <span id="footer-icon">
+          <i class="fa-solid fa-font-awesome fa-fw"></i>
+        </span>
+        &commat;<%= config.author %>
+      </div>
+  
+      <div>
+        Based on the <a href="https://hexo.io">Hexo Engine</a> &amp;
+        <a href="https://github.com/kmizmal/hexo-theme-particlex">ParticleX Theme</a>
+      </div>
+  
+      <% if (theme.footer.ICP.enable) { %>
+      <div>
+        备案号：
+        <% if (theme.footer.ICP.link) { %>
+          <a href="<%- url_for(theme.footer.ICP.link) %>"><%= theme.footer.ICP.code %></a>
+        <% } else { %>
+          <%= theme.footer.ICP.code %>
         <% } %>
-        <% if (theme.footer.visitors.enable) { %>
-        <div class="visitors">
-            本站访问次数:<span id="finicount_views"></span>
-            <script async src="//finicounter.eu.org/finicounter.js"></script>
-        </div>
-        <% } %>
-        <% if (theme.footer.game_card.enable) { %>
-            <div>
-                <a href="https://hoyocard.qhy04.com">
-                    <% if (theme.footer.game_card.more) { %>
-                   <img id="game_card" src="https://hoyocard.qhy04.com/<%- theme.footer.game_card.game %>/detail/<%- theme.footer.game_card.background %>/<%- theme.footer.game_card.id %>.png" alt="玩原神的这辈子有了">
-                   <% } else  { %>
-                    <img id="game_card" src="https://hoyocard.qhy04.com/<%- theme.footer.game_card.game %>/<%- theme.footer.game_card.background %>/<%- theme.footer.game_card.id %>.png" alt="玩原神的这辈子有了">
-                    <% }%> 
-                </a>
-            </div>
-            
-            <% } %>
-    </div>
-    <script>
-        //简单的重构标题ID
-    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
-        let text = el.textContent.trim().toLowerCase();
-        // 简单清理，去除标点
-        let newId = text.replace(/[。，、“”‘’·\[\]()《》~（）!！?？"':：;；&]/g, '').replace(/\s+/g, '-');
-        el.id = newId;
-        // 同时更新标题内的跳转链接（如果有）
-        let a = el.querySelector('a.headerlink');
-        if (a) a.href = '#' + newId;
-      });
+      </div>
+      <% } %>
+  
+      <% if (theme.footer.visitors.enable) { %>
+      <div class="visitors">
+        本站访问次数：<span id="finicount_views">加载中...</span>
+      </div>
+      <script>
+        // 仅在非 localhost 环境加载访客统计脚本
+        if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+          const script = document.createElement("script");
+          script.src = "https://finicounter.eu.org/finicounter.js";
+          script.async = true;
+          script.onload = () => {
+            const checkViews = setInterval(() => {
+              try {
+                if (typeof finiCounter !== "undefined" && finiCounter.views !== undefined) {
+                  const el = document.getElementById("finicount_views");
+                  if (el) el.textContent = finiCounter.views;
+                  clearInterval(checkViews);
+                }
+              } catch (e) {
+                console.warn("访客统计异常：", e);
+                clearInterval(checkViews);
+              }
+            }, 500);
+          };
+          script.onerror = () => {
+            const el = document.getElementById("finicount_views");
+            if (el) el.textContent = "统计服务不可用";
+          };
+          document.body.appendChild(script);
+        } else {
+          const el = document.getElementById("finicount_views");
+          if (el) el.textContent = "本地预览中";
+        }
       </script>
-</footer>
+      <% } %>
+  
+      <% if (theme.footer.game_card.enable) { %>
+      <div>
+        <a href="https://hoyocard.qhy04.com">
+          <img id="game_card"
+            src="https://hoyocard.qhy04.com/<%- theme.footer.game_card.game %><% if (theme.footer.game_card.more) { %>/detail<% } %>/<%- theme.footer.game_card.background %>/<%- theme.footer.game_card.id %>.png"
+            alt="玩原神的这辈子有了">
+        </a>
+      </div>
+      <% } %>
+    </div>
+  </footer>
+  
