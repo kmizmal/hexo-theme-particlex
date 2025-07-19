@@ -1,94 +1,94 @@
-<%
-    let type = "post";
-    if (is_home()) type = "index";
-    if (is_post() || is_page()) type = "post";
-    if (is_category() || page.type === "categories") type = "categories";
-    if (is_tag() || page.type === "tags") type = "tags";
-    if (is_archive()) type = "archives";
-    
-    let title = page.title + " | " + config.title;
-    if (is_home()) title = config.title;
-    if (is_post() || is_page()) title = page.title + " | " + config.title;
-    if (is_category()) title = "Categories: " + page.category + " | " + config.title;
-    if (is_tag()) title = "Tags: " + page.tag + " | " + config.title;
-    if (is_archive()) title = "Archives | " + config.title;
+<% let type = "post"; if (is_home()) type = "index"; if (is_post() || is_page())
+type = "post"; if (is_category() || page.type === "categories") type =
+"categories"; if (is_tag() || page.type === "tags") type = "tags"; if
+(is_archive()) type = "archives"; let title = page.title + " | " + config.title;
+if (is_home()) title = config.title; if (is_post() || is_page()) title =
+page.title + " | " + config.title; if (is_category()) title = "Categories: " +
+page.category + " | " + config.title; if (is_tag()) title = "Tags: " + page.tag
++ " | " + config.title; if (is_archive()) title = "Archives | " + config.title;
 %>
 <!DOCTYPE html>
 <html lang="<%- config.language %>">
-<head>
+  <head>
     <meta charset="utf-8" />
     <title><%= title %></title>
     <meta name="author" content="<%- config.author %>" />
     <meta name="description" content="<%- config.description %>" />
     <meta name="keywords" content="<%- config.keywords %>" />
     <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
     <link rel="icon" href="<%- url_for(theme.avatar) %>" />
     <%- partial("import", { type }) %>
     <style>
-        body {
-            cursor: url('<%- url_for(theme.arrow) %>'), auto;
-        }
+      body {
+        cursor: url("<%- url_for(theme.arrow) %>"), auto;
+      }
     </style>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
         (function (w, d) {
-            let domDiv = d.createElement('div');
+          let domDiv = d.createElement("div");
 
-            domDiv.style.cssText = 'position: fixed; top: 0; left: 0; width: 0; height: 3px;' +
-                'box-shadow: 0 0 3px #999; background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet );z-index: 999999;-webkit-transition:width .3s linear;';
+          domDiv.style.cssText =
+            "position: fixed; top: 0; left: 0; width: 0; height: 3px;" +
+            "box-shadow: 0 0 3px #999; background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet );z-index: 999999;-webkit-transition:width .3s linear;";
 
-            d.body.appendChild(domDiv);
+          d.body.appendChild(domDiv);
 
-            var domH = w.innerHeight || d.documentElement.clientHeight || d.body.clientHeight;
+          var domH =
+            w.innerHeight ||
+            d.documentElement.clientHeight ||
+            d.body.clientHeight;
 
-            w.addEventListener('scroll', function () {
-                domDiv.style.width = Math.round(pageYOffset / (d.body.offsetHeight - domH) * 100) + '%';
-            }, false);
+          w.addEventListener(
+            "scroll",
+            function () {
+              domDiv.style.width =
+                Math.round((pageYOffset / (d.body.offsetHeight - domH)) * 100) +
+                "%";
+            },
+            false
+          );
         })(window, document);
-    });
-</script>
-
-</head>
-<body>
+      });
+    </script>
+    <% if (theme.TopIndex.enable) { %>
+    <script src="<%- url_for('/js/TopIndex.js') %>"></script>
+    <% } %>
+  </head>
+  <body>
     <div id="layout">
-        <transition name="fade">
-            <div id="loading" v-show="loading">
-                <div id="loading-circle">
-                </div>
-                <div id="loading-toast"><h2 :id="null">LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="<%- url_for(theme.loading) %>" /></div>
-            </div>
-        </transition>
-        <%- partial("menu", {}, {cache: true}) %>
-        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <%- partial(type) %>
-            <%- partial("footer"), {}, {cache: true} %>
+      <transition name="fade">
+        <div id="loading" v-if="loading">
+          <div id="loading-circle"></div>
+          <div id="loading-toast">
+            <h2 :id="null">LOADING</h2>
+            <p>加载过慢请开启缓存 浏览器默认开启</p>
+            <img src="<%- url_for(theme.loading) %>" />
+          </div>
         </div>
-        <% if (theme.TopIndex.enable) { %>
-            <script src="<%- url_for('/js/TopIndex.js') %>"></script>
-        <% } %>
-        <% if (theme.Background_particles.enable) { %>
-            <script src="<%- url_for('/js/canvas.js') %>"></script>
-        <% } %>
-        <% if (theme.preview.enable) { %>
-        <transition name="fade">
-            <div id="preview" ref="preview" v-show="previewShow">
-                <img id="preview-content" ref="previewContent" />
-            </div>
-        </transition>
-        <% } %>
+      </transition>
+      <%- partial("menu", {}, {cache: true}) %>
+      <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+        <%- partial(type) %> <%- partial("footer"), {}, {cache: true} %>
+      </div>
+
+      <% if (theme.Background_particles.enable) { %>
+      <script src="<%- url_for('/js/canvas.js') %>"></script>
+      <% } %> <% if (theme.preview.enable) { %>
+      <transition name="fade">
+        <div id="preview" ref="preview" v-show="previewShow">
+          <img id="preview-content" ref="previewContent" />
+        </div>
+      </transition>
+      <% } %>
     </div>
     <script src='<%- url_for("/js/main.js") %>'></script>
-    <% if (type === "post" && page.comments) { %>
-    <%- partial("comment", {}, {cache: true}) %>
-    <% } %>
-
-    <% if (theme.span.enable) { %>
+    <% if (type === "post" && page.comments) { %> <%- partial("comment", {},
+    {cache: true}) %> <% } %> <% if (theme.span.enable) { %>
     <script src="<%- url_for('/js/span.js') %>"></script>
     <% } %>
-</body>
+  </body>
 </html>

@@ -4,12 +4,14 @@
   rel="stylesheet"
   href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css"
 />
+
 <link rel="preconnect" href="https://fonts.googleapis.cn" />
 <link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
 />
+
 <script>
   const mixins = {};
 </script>
@@ -25,65 +27,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.css" />
 
 <!-- PrismJS 高亮脚本 -->
-<script>
-(function () {
-  const prismCoreURL = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0";
-  const componentURL = prismCoreURL + "/components/";
-  const pluginURL = prismCoreURL + "/plugins/";
+<script src="<%- url_for('/js/PrismJS.js') %>"></script>
 
-  const langMap = {
-    c: "c", cpp: "cpp", java: "java", python: "python",
-    js: "javascript", javascript: "javascript", json: "json",
-    html: "markup", xml: "markup", bash: "bash", shell: "bash",
-    sh: "bash", md: "markdown", markdown: "markdown",
-    yaml: "yaml", yml: "yaml", go: "go", php: "php", css: "css"
-  };
-
-  const loadScript = (src) => new Promise((resolve, reject) => {
-    const s = document.createElement("script");
-    s.src = src;
-    s.defer = true;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.body.appendChild(s);
-  });
-
-  const detectLangs = () => {
-    const langs = new Set();
-    document.querySelectorAll("code[class*='language-']").forEach((code) => {
-      const match = code.className.match(/language-([\w-]+)/);
-      if (match) {
-        const raw = match[1].toLowerCase();
-        const mapped = langMap[raw] || raw;
-        if (mapped !== "none") langs.add(mapped);
-      }
-    });
-    return [...langs];
-  };
-
-  const loadPrismAndLanguages = async () => {
-    await loadScript(`${prismCoreURL}/prism.min.js`);
-    await loadScript(`${pluginURL}line-numbers/prism-line-numbers.min.js`);
-    const langs = detectLangs();
-    await Promise.all(
-      langs.map((lang) =>
-        loadScript(`${componentURL}prism-${lang}.min.js`).catch(() => {
-          console.warn(`Language '${lang}' not found`);
-        })
-      )
-    );
-    if (window.Prism) {
-      Prism.highlightAll();
-    }
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadPrismAndLanguages);
-  } else {
-    loadPrismAndLanguages();
-  }
-})();
-</script>
 <% } %>
 
 

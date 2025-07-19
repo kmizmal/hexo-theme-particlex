@@ -7,9 +7,8 @@ let quotes = [
 ];
 
 $("body").click(function (e) {
-    // 如果点击的是图片，不触发文字特效
     if ($(e.target).is("img")) return;
-
+    if ($(e.target).closest("pre").length > 0) return;
     // 随机选择语录
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[randomIndex];
@@ -17,29 +16,29 @@ $("body").click(function (e) {
     const $quoteElement = $("<span class='quote'></span>")
         .text(quote)
         .css({
-            "top": e.pageY - 50, // 上移避免被鼠标遮挡
+            "top": e.pageY - 150, // 上移避免被鼠标遮挡
             "left": e.pageX,
             "color": getRandomColor(),
         });
-    
+
     $("body").append($quoteElement);
 
     // 随机动画参数
     const startRotate = Math.floor(Math.random() * 41) - 20;
-    const helf=Math.random() > 0.5;
+    const helf = Math.random() > 0.5;
     const endRotate = startRotate + (helf ? 15 : -10);
     const endX = (Math.random() * 60 - 30);
     const endY = - (Math.random() * 80 + 100);
-    
+
     // 设置CSS变量用于动画
     $quoteElement[0].style.setProperty('--start-rotate', `${startRotate}deg`);
     $quoteElement[0].style.setProperty('--end-rotate', `${endRotate}deg`);
     $quoteElement[0].style.setProperty('--end-x', `${endX}px`);
     $quoteElement[0].style.setProperty('--end-y', `${endY}px`);
-    
+
     // 至少1秒的动画持续时间
-    const duration = Math.random()+ 1.0;
-    
+    const duration = Math.random() + 1.0;
+
     // 应用动画
     $quoteElement.css({
         "animation": `quote-float ${duration}s ease-out forwards`,
@@ -72,14 +71,14 @@ async function getfetchHitokoto() {
     if (!getfetchHitokoto.lastCall) {
         getfetchHitokoto.lastCall = 0;
     }
-    
+
     const now = Date.now();
     if (now - getfetchHitokoto.lastCall < 60000) {
         console.warn("调用频率太快，已被限制");
         return;
     }
     getfetchHitokoto.lastCall = now;
-    
+
     try {
         const response = await fetch('https://v1.hitokoto.cn');
         const { hitokoto } = await response.json();

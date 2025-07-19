@@ -747,81 +747,64 @@ a {
     border-radius: 10px;
     table-layout: fixed;
   }
-
-  .copycode {
-    color: #5c6b72;
+.code-wrapper{
+  position: relative;
+  pre {
+    font-family: "Fira Code", monospace;
+    box-shadow: 0 2px 12px 0 #0000001a;
+    margin: 25px 0;
+    padding-top: 2rem;
+    border-radius: 15px;
+   
+  }
+  .code-lang {
+    background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+    border-radius: 5px  10px;
+    box-shadow: 1px 1px 0.75rem #ed6ea14d;
+    color: #fff;
+    left: 15px;
+    padding: 10px 15px;
     position: absolute;
+    z-index: 10;
+    top: -5px;
+  }
+  .copycode {
+    position: absolute;
+    padding: 15px;
     right: 0;
     top: 0;
-
-    &:hover {
-      opacity: 0.8;
-    }
+    color: #ddf3ff;
+    cursor: pointer;
 
     i {
-      padding: 15px;
       position: absolute;
-      right: 0;
-      top: 0;
-      transition: transform 0.25s;
-    }
-
-    &.copied i {
-      transform: scale(1.25);
-
-      &:first-child {
-        opacity: 0;
+      right: 15px;
+      top: 15px;
+      transition: transform 0.25s, opacity 0.25s;
+      opacity: 1;
+      &:hover {
+        opacity: 0.8;
       }
     }
 
-    &:not(.copied) i:last-child {
+    i:last-child {
       opacity: 0;
+      transform: scale(1);
+    }
+
+    &.copied {
+      i:first-child {
+        opacity: 0;
+      }
+
+      i:last-child {
+        opacity: 1;
+        transform: scale(1.25);
+      }
     }
   }
 }
-
-.code-content {
-  margin-top: 2.5rem;
-  font-size: 13px;
-  line-height: 2;
-  overflow: auto;
-  padding: 50px 30px 20px;
-  white-space: pre;
-  font-family: "Fira Code", "Noto Sans SC", monospace;
-
-  .hljs-ln {
-    &-numbers {
-      border-right: 1px solid #ccc;
-      color: #ccc;
-      padding-right: 10px !important;
-      text-align: right;
-      vertical-align: top;
-      min-width: 2.5em;
-    }
-
-    &-code {
-      padding-left: 20px !important;
-    }
-  }
-
-  tr td::selection {
-    background-color: #97c2e79a;
-    color: #cf73b5cf;
-  }
-}
-
-.language {
-  background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
-  border-radius: 0 0 10px 10px;
-  box-shadow: 1px 1px 0.75rem #ed6ea14d;
-  color: #fff;
-  font-size: 12px;
-  font-weight: bold;
-  left: 30px;
-  padding: 10px 15px;
-  position: absolute;
-  top: 0;
-  font-family: "Fira Code", "Noto Sans SC", monospace;
+ 
 }
 
 .icon {
@@ -946,7 +929,6 @@ a {
   }
 }
 
-// 特殊样式
 .quote {
   position: absolute;
   z-index: 9999;
@@ -995,30 +977,10 @@ a {
   }
 }
 
-#game_card {
-  max-width: 95%;
-}
-
 b,
 strong {
   font-weight: bold;
   line-height: 2.5;
-}
-
-blockquote {
-  background: #d9e8ff6b;
-  border-left: 3px solid #1e3e3f;
-  border-radius: 3px;
-  margin: 15px 0;
-  overflow: auto;
-  padding: 0 15px;
-}
-
-code {
-  background: #bddcf76b;
-  border-radius: 4px;
-  line-height: 2.5;
-  padding: 4px 8px;
 }
 
 hr {
@@ -1039,16 +1001,6 @@ ul,
 ol {
   line-height: 1.7;
   margin: 15px 0;
-}
-
-pre {
-  border: 1px solid #ebeef5;
-  border-radius: 15px;
-  box-shadow: 0 2px 12px 0 #0000001a;
-  margin: 25px 0;
-  overflow: hidden;
-  white-space: normal;
-  font-family: "Fira Code", "Noto Sans SC", monospace;
 }
 
 table:not(.hljs-ln) {
@@ -1090,7 +1042,6 @@ video,
 .copycode,
 .friend-link a,
 .go-post,
-.hljs-ln-numbers,
 .icon-link a,
 .katex,
 .language,

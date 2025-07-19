@@ -76,14 +76,7 @@ footer:
         enable: true
         code: 萌ICP备20250124号
         link: https://icp.gov.moe/?keyword=20250124
-    # 米哈游玩家信息卡片 https://hoyocard.qhy04.com
-    game_card:
-        #  https://hoyocard.qhy04.com/gs/rand/288292888.png
-        enable: true
-        game: gs
-        more: true
-        background: rand
-        id: 288292888
+
     visitors:
         enable: true
 # Polyfill
