@@ -34,7 +34,7 @@
     };
     const codeMean = () => {
         const codeBlocks = document.querySelectorAll("code[class*='language-']");
-        
+
         codeBlocks.forEach((code) => {
             const pre = code.parentNode;
             const wrapper = document.createElement("div");
@@ -56,7 +56,7 @@
                 langSpan.className = "code-lang";
                 langSpan.textContent = lang[1].toUpperCase();
                 wrapper.appendChild(langSpan);
-              }
+            }
             // 创建 copy 图标
             const iconCopy = document.createElement("i");
             iconCopy.className = "fa-solid fa-copy fa-fw";

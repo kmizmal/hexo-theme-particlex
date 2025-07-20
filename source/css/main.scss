@@ -747,64 +747,62 @@ a {
     border-radius: 10px;
     table-layout: fixed;
   }
-.code-wrapper{
-  position: relative;
-  pre {
-    font-family: "Fira Code", monospace;
-    box-shadow: 0 2px 12px 0 #0000001a;
-    margin: 25px 0;
-    padding-top: 2rem;
-    border-radius: 15px;
-   
-  }
-  .code-lang {
-    background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
-    border-radius: 5px  10px;
-    box-shadow: 1px 1px 0.75rem #ed6ea14d;
-    color: #fff;
-    left: 15px;
-    padding: 10px 15px;
-    position: absolute;
-    z-index: 10;
-    top: -5px;
-  }
-  .copycode {
-    position: absolute;
-    padding: 15px;
-    right: 0;
-    top: 0;
-    color: #ddf3ff;
-    cursor: pointer;
-
-    i {
+  .code-wrapper {
+    position: relative;
+    pre {
+      font-family: "Fira Code", monospace;
+      box-shadow: 0 2px 12px 0 #0000001a;
+      margin: 25px 0;
+      padding-top: 2rem;
+      border-radius: 15px;
+    }
+    .code-lang {
+      background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+      border-radius: 5px 10px;
+      box-shadow: 1px 1px 0.75rem #ed6ea14d;
+      color: #fff;
+      left: 15px;
+      padding: 10px 15px;
       position: absolute;
-      right: 15px;
-      top: 15px;
-      transition: transform 0.25s, opacity 0.25s;
-      opacity: 1;
-      &:hover {
-        opacity: 0.8;
-      }
+      z-index: 10;
+      top: -5px;
     }
+    .copycode {
+      position: absolute;
+      padding: 15px;
+      right: 0;
+      top: 0;
+      color: #ddf3ff;
+      cursor: pointer;
 
-    i:last-child {
-      opacity: 0;
-      transform: scale(1);
-    }
-
-    &.copied {
-      i:first-child {
-        opacity: 0;
+      i {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        transition: transform 0.25s, opacity 0.25s;
+        opacity: 1;
+        &:hover {
+          opacity: 0.8;
+        }
       }
 
       i:last-child {
-        opacity: 1;
-        transform: scale(1.25);
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      &.copied {
+        i:first-child {
+          opacity: 0;
+        }
+
+        i:last-child {
+          opacity: 1;
+          transform: scale(1.25);
+        }
       }
     }
   }
-}
- 
 }
 
 .icon {
