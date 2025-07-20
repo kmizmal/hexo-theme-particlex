@@ -1,5 +1,5 @@
 # Hexo-Theme-ParticleX
-
+[This document is also available in English](en-README.md)
 原项目 `README.md` 里说：
 
 > 目前有 Full、Night 和 Maiden **两个**主题样式。
@@ -25,32 +25,7 @@ pnpm add hexo-renderer-sass-next
 theme: particlex
 ```
 
-## 2.1. 关闭自带代码高亮
-
-Hexo 有自带的代码高亮，但是和 ParticleX 的不兼容。
-
-```yaml
-highlight:
-    enable: false
-prismjs:
-    enable: false
-```
-
-如果使用 Hexo 7.0.0 之后的版本只需要修改为：
-
-```yaml
-syntax_highlighter:
-```
-
-如果使用 Pandoc 还需要设置一下：
-
-```yaml
-pandoc:
-    extra:
-        - no-highlight:
-```
-
-## 2.2. 禁用年度月度归档
+## 2.1 禁用年度月度归档
 
 Hexo 会自动生成年度月度归档，可是 ParticleX 主题没有这个功能。~~我太懒了~~
 
@@ -193,16 +168,19 @@ polyfill:
 
 ### 3.3.2. 代码高亮
 
-使用 Highlight.js 代码高亮。
+使用 PrismJS.js 代码高亮。
 
-样式可以在[这里](https://highlightjs.org/static/demo)选择，默认为 GitHub。
+可以在[官网](https://prismjs.com/examples.html)找到其他样式，注意prism-前缀  
+或者你也可以来我的[blog](https://blog.zmal.top/2025/0720/example-of-prismjs-styles)查阅
 
 ```yaml
-# Highlight.js
-# https://highlightjs.org
-highlight:
+prismjs:
+    # 是否启用高亮
     enable: true
-    style: github
+    # 高亮样式
+    theme: prism-tomorrow
+    # 是否启用行号插件
+    lineNumbers: true
 ```
 
 ### 3.3.3. 数学渲染

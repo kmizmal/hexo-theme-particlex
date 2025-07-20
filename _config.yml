@@ -36,7 +36,6 @@ Background_particles:
 
 # Main menu navigation
 menu:
-    
     Home:
         name: house
         theme: solid
@@ -86,6 +85,7 @@ polyfill:
     features:
         - default
 
+# https://prismjs.com/examples.html
 prismjs:
     enable: true
     theme: prism-tomorrow
