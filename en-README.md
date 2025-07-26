@@ -1,11 +1,12 @@
 # Hexo-Theme-ParticleX
 >***This English version is not necessarily the latest!***
 
-The original `README.md` stated:
+The original `README.md` says:
 
-> Currently, there are **two** theme styles: Full, Night, and Maiden.
+> There are currently two themes: Full, Night, and Maiden.
 
-However, only one style remains after updates. If you'd like to change colors, please edit `main.css` directly.
+However, in this modified version, there's only **one** style left.
+If you want to change the colors, please modify `main.scss` directly.
 
 ---
 
@@ -13,7 +14,7 @@ However, only one style remains after updates. If you'd like to change colors, p
 
 * [GitHub Pages](https://kmizmal.github.io/)
 * [Netlify](https://argvchs.netlify.app)
-* [Vercel](https://zmal-blog.vercel.app/)
+* [Vercel](https://zmal-blog.vercel.app)
 
 ---
 
@@ -21,284 +22,300 @@ However, only one style remains after updates. If you'd like to change colors, p
 
 ```bash
 git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
-pnpm add hexo-renderer-sass-next
+pnpm add sass hexo-renderer-sass-next
 ```
 
-Then, set the theme in your root `_config.yml`:
+See the [Configuration section](#3-configuration) for how to configure.
+Then set the theme in your root `_config.yml`:
 
 ```yaml
 theme: particlex
 ```
 
-## 2.1 Disable Archive by Year/Month
+## 2.1 Disable yearly/monthly archive
 
-Hexo generates yearly/monthly archives by default, but this theme does not support them.
+Hexo generates yearly/monthly archives by default,
+but ParticleX does **not** support this feature.
 
 ```yaml
 archive_generator:
-    enabled: true
-    per_page: 0
-    yearly: false
-    monthly: false
-    daily: false
+  enabled: true
+  per_page: 0
+  yearly: false
+  monthly: false
+  daily: false
 ```
 
-After editing, remember to clear cache with `hexo cl`.
+After modifying, run `hexo clean` to clear cache.
 
 ---
 
 # 3. Configuration
 
-> Please refer to `_config.yml.example` and rename it to `_config.yml`.
+> Please copy or rename `_config.yml.example` to `_config.yml`.
 
-## 3.1 Basic Configuration
+## 3.1 Basic Config
 
-The `background` parameter accepts a list; one is chosen at random on each load.
+`background` is a list, a random one will be chosen each time.
 
 ```yaml
+# Avatar
 avatar: /images/avatar.jpg
+
+# Homepage background
 background:
-    - /images/background.jpg
+  - /images/background.jpg
+
+# Loading animation gif
 loading: /images/loading.gif
+
+# Tag colors in category/tag pages
 colors:
-    - "#ffa2c4"
-    - "#00bcd4"
-    - "#03a9f4"
-    - "#00a596"
-    - "#ff7d73"
+  - "#ffa2c4"
+  - "#00bcd4"
+  - "#03a9f4"
+  - "#00a596"
+  - "#ff7d73"
+  - "#f5bcd0"
+  - "#aee8fe"
+  - "#66CCFF"
+  - "#39C5BB"
 ```
 
-## 3.2 Content Configuration
+## 3.2 Content Settings
 
-### 3.2.1 Navbar
+### 3.2.1 Navigation Bar
 
-Uses Font Awesome 6 icons:
+This theme uses [Font Awesome 6](https://fontawesome.com) for icons.
 
 ```yaml
 menu:
-    Home:
-        name: house
-        theme: solid
-        link: /
-    About:
-        name: id-card
-        theme: solid
-        link: /about
-    Archives:
-        name: box-archive
-        theme: solid
-        link: /archives
-    Categories:
-        name: bookmark
-        theme: solid
-        link: /categories
-    Tags:
-        name: tags
-        theme: solid
-        link: /tags
+  Home:
+    name: house
+    theme: solid
+    link: /
+  About:
+    name: id-card
+    theme: solid
+    link: /about
+  Archives:
+    name: box-archive
+    theme: solid
+    link: /archives
+  Categories:
+    name: bookmark
+    theme: solid
+    link: /categories
+  Tags:
+    name: tags
+    theme: solid
+    link: /tags
 ```
 
-### 3.2.2 Sidebar Card
+### 3.2.2 Info Card on Homepage
 
-Markdown is supported in the `description`.
-`iconLinks` uses the same format as `menu`.
+`description` supports Markdown syntax.
+`iconLinks` shares the same format as `menu`.
 
 ```yaml
 card:
-    enable: true
-    description: |
-        Description
-        ...
-    iconLinks:
-    friendLinks:
-        Argvchs: https://argvchs.github.io
+  enable: true
+  description: |
+    Description text here
+  iconLinks:
+  friendLinks:
+    Argvchs: https://argvchs.github.io
+    kmizmal: https://blog.zmal.top
 ```
 
 ### 3.2.3 Footer
 
-For users deploying under their own domain in China, you can configure an ICP license display.
+ICP registration is mandatory in some regions when using a custom domain.
 
 ```yaml
 footer:
-    since: 2022
-    ICP:
-        enable: false
-        code:
-        link:
-    game_card:
-        enable: true
-        game: gs
-        more: false
-        background: rand
-        id:
-    visitors:
-        enable: true
+  since: 2022
+  ICP:
+    enable: false
+    code:
+    link:
+  visitors:
+    enable: true
 ```
 
 ## 3.3 Features
 
 ### 3.3.1 Polyfill
 
-Uses [Polyfill.io](https://polyfill.io), replaced with Alibaba CDN for mainland China compatibility.
+Using [Polyfill.io](https://polyfill.io) to automatically provide JS compatibility by UA.
+Replaced with Alibaba mirror for better access in China.
 
 ```yaml
 polyfill:
-    enable: true
-    features:
-        - default
+  enable: true
+  features:
+    - default
 ```
 
 ### 3.3.2 Code Highlighting
 
-Uses PrismJS.
-Themes can be found on [PrismJS examples](https://prismjs.com/examples.html) or
-[My blog post](https://blog.zmal.top/2025/0720/example-of-prismjs-styles).
+Using PrismJS for syntax highlighting.
+Check the [Prism site](https://prismjs.com/examples.html) for themes or see [this demo](https://blog.zmal.top/2025/0720/example-of-prismjs-styles).
 
 ```yaml
 prismjs:
-    enable: true
-    theme: prism-tomorrow
-    lineNumbers: true
+  enable: true
+  theme: prism-tomorrow
+  lineNumbers: true
 ```
 
 ### 3.3.3 Math Rendering
 
-Uses KaTeX for math expressions.
+Using KaTeX to render math formulas.
 
 ```yaml
 math:
-    enable: false
+  enable: false
 ```
 
 ### 3.3.4 Image Preview
 
-Simple image zoom on click.
+~~Simple image zoom preview ~~(currently broken )
 
 ```yaml
 preview:
-    enable: true
+  enable: true
 ```
 
 ### 3.3.5 Post Excerpt
 
-Supports `<!-- more -->` in post content.
-To define excerpt separately, use `description` in Front-Matter.
+Normally `<!-- more -->` is used for excerpt.
+You can also manually define it in front-matter:
 
 ```yaml
 description: |
-    Normal _Italic_ **Strong**
+  Normal _Italic_ **Strong**
 ```
 
 ### 3.3.6 Sticky Posts
 
-Use `pinned` in Front-Matter. Higher numbers are shown first.
+Use `pinned` in the front-matter. Higher = more sticky.
 
 ### 3.3.7 Post Encryption
 
-Encrypt articles with AES. Requires [hexo-helper-crypto](https://github.com/theme-particlex/hexo-helper-crypto).
+Use `secret` in front-matter to encrypt post.
+**Requires [hexo-helper-crypto](https://github.com/theme-particlex/hexo-helper-crypto)**
 
 ```yaml
 crypto:
-    enable: false
+  enable: false
 ```
 
 ### 3.3.8 Search
 
-A simple title-based search embedded in Archives.
+A simple post title search (embedded in Archives).
+~~Still under repair~~
 
 ```yaml
 search:
-    enable: false
+  enable: false
 ```
+
+---
 
 ## 3.4 Comment Systems
 
-### 3.4.1 Giscus
+### 3.4.1 giscus
 
-GitHub Discussions-powered comments.
+Backed by GitHub Discussions.
+Configure at [giscus.app](https://giscus.app).
 
 ```yaml
 giscus:
-    enable: false
-    src: https://giscus.app/client.js
-    repo:
-    repoID:
-    category:
-    categoryID:
-    mapping: pathname
-    strict: 0
-    reactionsEnabled: 1
-    emitMetadata: 0
-    inputPosition: bottom
-    theme: preferred_color_scheme
-    lang:
+  enable: false
+  src: https://giscus.app/client.js
+  repo:
+  repoID:
+  category:
+  categoryID:
+  mapping: pathname
+  strict: 0
+  reactionsEnabled: 1
+  emitMetadata: 0
+  inputPosition: bottom
+  theme: preferred_color_scheme
+  lang:
 ```
 
 ### 3.4.2 Gitalk
 
-Issue-based comment system.
-You may need your own [CORS proxy](https://argvchs.github.io/2022/07/04/build-cors-anywhere).
+A GitHub Issues-based comment system.
+Consider self-hosting CORS proxy due to Cloudflare slowness.
 
 ```yaml
 gitalk:
-    enable: false
-    clientID:
-    clientSecret:
-    repo:
-    owner:
-    admin:
-    language:
-    proxy:
+  enable: false
+  clientID:
+  clientSecret:
+  repo:
+  owner:
+  admin:
+  language:
+  proxy:
 ```
 
 ### 3.4.3 Waline
 
-A fast, minimalist comment system.
-
-More info: [Using Waline on ParticleX | Yuzi's Blog](https://blog.yuzi.dev/posts/bcb4ff00.html)
+A simple and secure commenting system.
+[Setup tutorial](https://blog.yuzi.dev/posts/bcb4ff00.html)
 
 ```yaml
 waline:
-    enable: false
-    serverURL:
-    locale:
-    commentCount: true
-    pageview: false
-    emoji:
-        - https://unpkg.com/@waline/emojis@1.2.0/weibo
-        - https://unpkg.com/@waline/emojis@1.2.0/alus
-        - https://unpkg.com/@waline/emojis@1.2.0/bilibili
-        - https://unpkg.com/@waline/emojis@1.2.0/qq
-        - https://unpkg.com/@waline/emojis@1.2.0/tieba
-        - https://unpkg.com/@waline/emojis@1.2.0/tw-emoji
-    meta:
-        - nick
-        - mail
-        - link
-    requiredMeta:
-        - nick
-    lang:
-    wordLimit: 0
-    login: enable
-    pageSize: 10
+  enable: false
+  serverURL:
+  locale:
+  commentCount: true
+  pageview: false
+  emoji:
+    - https://unpkg.com/@waline/emojis@1.2.0/weibo
+    - https://unpkg.com/@waline/emojis@1.2.0/alus
+    - https://unpkg.com/@waline/emojis@1.2.0/bilibili
+    - https://unpkg.com/@waline/emojis@1.2.0/qq
+    - https://unpkg.com/@waline/emojis@1.2.0/tieba
+    - https://unpkg.com/@waline/emojis@1.2.0/tw-emoji
+  meta:
+    - nick
+    - mail
+    - link
+  requiredMeta:
+    - nick
+  lang:
+  wordLimit: 0
+  login: enable
+  pageSize: 10
 ```
 
 ### 3.4.4 Twikoo
 
-A lightweight and secure commenting system.
+A free, simple, and secure comment system for static sites.
 
 ```yaml
 twikoo:
-    enable: false
-    envID:
-    region:
-    path: location.pathname
-    lang:
+  enable: false
+  envID:
+  region:
+  path: location.pathname
+  lang:
 ```
 
 ---
 
 # 4. Final Notes
 
-This project is licensed under the MIT License.
-Contributions are welcome! Feel free to open an issue for questions or ideas, or fork the repo and submit a pull request!
+This project uses the MIT License. Contributions are welcome.
+Feel free to open issues or fork and submit pull requests.
+
+The upstream project has not been updated for a while.
+This is a heavily modified version, not affiliated with the original.
+
+If you run into problems or have cool ideas — open an issue!

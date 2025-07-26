@@ -4,7 +4,7 @@
 
 > 目前有 Full、Night 和 Maiden **两个**主题样式。
 
-但是更改后只有一种了，如果你想改颜色就在 `main.css` 里替换吧。
+但是更改后只有一种了，如果你想改颜色就在 `main.scss` 里替换吧。
 
 # 1. 演示
 
@@ -16,10 +16,10 @@
 
 ```bash
 git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
-pnpm add hexo-renderer-sass-next
+pnpm add sass hexo-renderer-sass-next
 ```
-
-然后在根目录 `_config.yml` 设置主题为 ParticleX 即可。
+参考[配置](#3-配置)完成配置   
+然后在根目录 `_config.yml` 设置主题为 ParticleX
 
 ```yaml
 theme: particlex
@@ -42,30 +42,35 @@ archive_generator:
 
 # 3. 配置
 
-> 请参考目录下的`_config.yml.exmple`填写`_config.yml`
+> 请根据目录下的`_config.yml.exmple`填写`_config.yml`
+> 也许你可以直接重命名一份喵
 
 ## 3.1. 基本配置
 
 `background` 参数是一个列表，打开时会随机加载一个背景。
 
 ```yaml
-# Avatar image
+# 头像
 avatar: /images/avatar.jpg
 
-# Home page background image
+# 主页背景
 background:
     - /images/background.jpg
 
-# Loading image
+# 加载动画gif
 loading: /images/loading.gif
 
-# Optional colors for category and tag
+# category and tag中标签的随机颜色列表
 colors:
     - "#ffa2c4"
     - "#00bcd4"
     - "#03a9f4"
     - "#00a596"
     - "#ff7d73"
+    - "#f5bcd0"
+    - "#aee8fe"
+    - "#66CCFF"
+    - "#39C5BB"
 ```
 
 ## 3.2. 内容配置
@@ -78,7 +83,7 @@ colors:
 # ParticleX theme icon is adopts the Font Awesome 6
 # https://fontawesome.com
 
-# Main menu navigation
+# 主菜单导航
 menu:
     Home:
         name: house
@@ -109,7 +114,7 @@ menu:
 图标链接 `iconLinks` 配置和导航栏配置相同。
 
 ```yaml
-# Side info card
+# 侧面信息卡
 card:
     enable: true
     description: |
@@ -118,6 +123,7 @@ card:
     iconLinks:
     friendLinks:
         Argvchs: https://argvchs.github.io
+        kmizmal: https://blog.zmal.top
 ```
 
 ### 3.2.3. 页脚
@@ -127,21 +133,15 @@ card:
 如没有需要显示备案消息的可以关闭。
 
 ```yaml
-# Footer info
+# 页脚
 footer:
+  # 底部起始时间yyyy
     since: 2022
-    # Customize the server domain name ICP
+    # ICP备案信息
     ICP:
         enable: false
         code:
         link:
-    #详细参数见 https://hoyocard.qhy04.com/
-    game_card:
-        enable: true
-        game: gs  #游戏简写
-        more: false   #更详细的卡片
-        background: rand  #背景图片
-        id:   #米游社id
     #是否开启访问亮统计 https://finicounter.eu.org/
     visitors:
         enable: true
@@ -195,7 +195,8 @@ math:
 
 ### 3.3.4. 图片预览
 
-简单的点击图片放大缩小的预览。
+~~简单的点击图片放大缩小的预览。（被我玩坏了喵~~   
+还没修好
 
 ```yaml
 # Image preview
@@ -235,7 +236,8 @@ crypto:
 嵌入到 Archives 中的搜索。
 
 目前只支持搜索文档标题。
-
+(玩坏了喵，等修)
+~~也许本来就不好用~~
 ```yaml
 # Search
 search:
@@ -341,3 +343,5 @@ twikoo:
 # 4. 写在最后
 
 本项目采用 MIT 开源许可证，欢迎大家贡献，你可以随意打开一个 Issue 来进行提问，有任何改进想法都可以进行 Fork，期待您的 Pull Request！
+
+argvchs 好久没更新了喵，此仓库算是魔改版本，并未和上游项目联系，如果在使用中遇到问题或者有什么好玩的想法欢迎提 Issue
