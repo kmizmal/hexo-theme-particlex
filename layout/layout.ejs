@@ -26,36 +26,8 @@ page.category + " | " + config.title; if (is_tag()) title = "Tags: " + page.tag
         cursor: url("<%- url_for(theme.arrow) %>"), auto;
       }
     </style>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        (function (w, d) {
-          let domDiv = d.createElement("div");
-
-          domDiv.style.cssText =
-            "position: fixed; top: 0; left: 0; width: 0; height: 3px;" +
-            "box-shadow: 0 0 3px #999; background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet );z-index: 999999;-webkit-transition:width .3s linear;";
-
-          d.body.appendChild(domDiv);
-
-          var domH =
-            w.innerHeight ||
-            d.documentElement.clientHeight ||
-            d.body.clientHeight;
-
-          w.addEventListener(
-            "scroll",
-            function () {
-              domDiv.style.width =
-                Math.round((pageYOffset / (d.body.offsetHeight - domH)) * 100) +
-                "%";
-            },
-            false
-          );
-        })(window, document);
-      });
-    </script>
     <% if (theme.TopIndex.enable) { %>
-    <script src="<%- url_for('/js/TopIndex.js') %>"></script>
+    <!-- <script src="<%- url_for('/js/TopIndex.js') %>"></script> -->
     <% } %>
   </head>
   <body>
@@ -72,19 +44,31 @@ page.category + " | " + config.title; if (is_tag()) title = "Tags: " + page.tag
       </transition>
       <%- partial("menu", {}, {cache: true}) %>
       <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-        <%- partial(type) %> <%- partial("footer"), {}, {cache: true} %>
+        <%- partial(type) %> 
+        <%- partial("footer", {}, {cache: true}) %>
       </div>
 
       <% if (theme.Background_particles.enable) { %>
       <script src="<%- url_for('/js/canvas.js') %>"></script>
-      <% } %> <% if (theme.preview.enable) { %>
+      <% } %>
+      <!-- <% if (theme.preview.enable) { %>
       <transition name="fade">
         <div id="preview" ref="preview" v-show="previewShow">
           <img id="preview-content" ref="previewContent" />
         </div>
       </transition>
-      <% } %>
+      <% } %> -->
+
+      <div id="scrollProgressBar" :style="{ width: scrollPercent + '%' }"></div>
+      <div
+        id="scrollTop"
+        @click="scrollToTop"
+        :style="{ opacity: scrollPercent > 20 ? 1 : 0, pointerEvents: scrollPercent > 20 ? 'auto' : 'none' }"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+      </div>
     </div>
+
     <script src='<%- url_for("/js/main.js") %>'></script>
     <% if (type === "post" && page.comments) { %> <%- partial("comment", {},
     {cache: true}) %> <% } %> <% if (theme.span.enable) { %>

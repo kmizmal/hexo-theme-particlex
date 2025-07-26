@@ -1,5 +1,6 @@
 mixins.home = {
     mounted() {
+        console.log("Home mixin mounted");
         let background = this.$refs.homeBackground;
         let images = background.dataset.images.split(",");
         let id = Math.floor(Math.random() * images.length);

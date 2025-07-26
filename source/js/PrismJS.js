@@ -1,49 +1,49 @@
 (function () {
-    const prismCoreURL = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0";
-    const componentURL = prismCoreURL + "/components/";
-    const pluginURL = prismCoreURL + "/plugins/";
-    let codeBlocks;
-    const langMap = {
-        c: "c", cpp: "cpp", java: "java", python: "python",
-        js: "javascript", javascript: "javascript", json: "json",
-        html: "markup", xml: "markup", bash: "bash", shell: "bash",
-        sh: "bash", md: "markdown", markdown: "markdown",
-        yaml: "yaml", yml: "yaml", go: "go", php: "php", css: "css"
-    };
+    // const prismCoreURL = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0";
+    // const componentURL = prismCoreURL + "/components/";
+    // const pluginURL = prismCoreURL + "/plugins/";
+    // let codeBlocks;
+    // const langMap = {
+    //     c: "c", cpp: "cpp", java: "java", python: "python",
+    //     js: "javascript", javascript: "javascript", json: "json",
+    //     html: "markup", xml: "markup", bash: "bash", shell: "bash",
+    //     sh: "bash", md: "markdown", markdown: "markdown",
+    //     yaml: "yaml", yml: "yaml", go: "go", php: "php", css: "css"
+    // };
 
-    const loadScript = (src) => new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = src;
-        s.defer = true;
-        s.onload = resolve;
-        s.onerror = reject;
-        document.body.appendChild(s);
-    });
-    const detectLangs = () => {
-        const langs = new Set();
-        codeBlocks = document.querySelectorAll("code[class*='language-']");
-        codeBlocks.forEach((code) => {
-            const match = code.className.match(/language-([\w-]+)/);
-            if (match) {
-                const raw = match[1].toLowerCase();
-                const mapped = langMap[raw] || raw;
-                if (mapped !== "none") langs.add(mapped);
-            }
-        });
-        return [...langs];
-    };
+    // const loadScript = (src) => new Promise((resolve, reject) => {
+    //     const s = document.createElement("script");
+    //     s.src = src;
+    //     s.defer = true;
+    //     s.onload = resolve;
+    //     s.onerror = reject;
+    //     document.body.appendChild(s);
+    // });
+    // const detectLangs = () => {
+    //     const langs = new Set();
+    //     codeBlocks = document.querySelectorAll("code[class*='language-']");
+    //     codeBlocks.forEach((code) => {
+    //         const match = code.className.match(/language-([\w-]+)/);
+    //         if (match) {
+    //             const raw = match[1].toLowerCase();
+    //             const mapped = langMap[raw] || raw;
+    //             if (mapped !== "none") langs.add(mapped);
+    //         }
+    //     });
+    //     return [...langs];
+    // };
     const codeMean = () => {
         const codeBlocks = document.querySelectorAll("code[class*='language-']");
 
         codeBlocks.forEach((code) => {
             const pre = code.parentNode;
+            // 避免重复插入
+            if (!pre || pre.querySelector(".copycode")) return;
+
             const wrapper = document.createElement("div");
             wrapper.className = "code-wrapper";
             pre.parentNode.insertBefore(wrapper, pre);
             wrapper.appendChild(pre);
-
-            // 避免重复插入
-            if (!pre || pre.querySelector(".copycode")) return;
 
             // 创建悬浮容器
             const copyDiv = document.createElement("div");
@@ -87,26 +87,26 @@
     };
 
 
-    const loadPrismAndLanguages = async () => {
-        await loadScript(`${prismCoreURL}/prism.min.js`);
-        await loadScript(`${pluginURL}line-numbers/prism-line-numbers.min.js`);
-        const langs = detectLangs();
-        await Promise.all(
-            langs.map((lang) =>
-                loadScript(`${componentURL}prism-${lang}.min.js`).catch(() => {
-                    console.warn(`Language '${lang}' not found`);
-                })
-            )
-        );
-        if (window.Prism) {
-            Prism.highlightAll();
-            codeMean();
-        }
-    };
+    // const loadPrismAndLanguages = async () => {
+    //     // await loadScript(`${prismCoreURL}/prism.min.js`);
+    //     // await loadScript(`${pluginURL}line-numbers/prism-line-numbers.min.js`);
+    //     const langs = detectLangs();
+    //     await Promise.all(
+    //         langs.map((lang) =>
+    //             loadScript(`${componentURL}prism-${lang}.min.js`).catch(() => {
+    //                 console.warn(`Language '${lang}' not found`);
+    //             })
+    //         )
+    //     );
+    //     if (window.Prism) {
+    //         // Prism.highlightAll();  
+    //     }
+    //     codeMean();
+    // };
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", loadPrismAndLanguages);
+        document.addEventListener("DOMContentLoaded", codeMean);
     } else {
-        loadPrismAndLanguages();
+        codeMean();
     }
 })();

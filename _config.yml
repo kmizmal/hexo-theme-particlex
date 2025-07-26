@@ -68,6 +68,7 @@ card:
 
 # Footer info
 footer:
+  # 底部起始时间yyyy
   since: 2022
   # Customize the server domain name ICP
   ICP:

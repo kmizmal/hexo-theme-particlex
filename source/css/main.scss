@@ -40,6 +40,32 @@ body {
       border-radius: 100px;
     }
   }
+  #scrollTop {
+    position: fixed;
+    color: #ef9ddd;
+    // transition: opacity 0.25s ease-out;
+    // opacity: 0;
+    background-color: #cfdffb;
+    border-radius: 50%;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    right: 1rem;
+    bottom: 2.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+  #scrollProgressBar{
+     position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 0; 
+        height: 3px; 
+        box-shadow: 0 0 3px #999; 
+        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
+        z-index: 999999; 
+        transition: width 0.3s linear;
+  }
 }
 
 ::selection {
@@ -165,7 +191,7 @@ a {
 
 #footer {
   font-size: 14px;
-  margin-top: 150px;
+  // margin-top: 150px;
   padding-bottom: 20px;
   text-align: center;
   width: 100%;
@@ -230,9 +256,9 @@ a {
         transition: transform 0.25s;
       }
 
-      &:hover img {
-        transform: rotate(360deg);
-      }
+      // &:hover img {
+      //   transform: rotate(360deg);
+      // }
     }
 
     .description {
@@ -362,8 +388,6 @@ a {
 
       @media (max-width: 900px) {
         display: none;
-        height: 350px;
-        width: 350px;
       }
 
       &:nth-child(1) {
@@ -580,7 +604,7 @@ a {
 
 #loading {
   align-items: center;
-  background: rgb(224 249 253 / 97%);
+  background: #e6efff;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -621,11 +645,11 @@ a {
     &:after {
       content: "";
       position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      background: #39c5bbdb;
+      top: 3px;
+      left: 3px;
+      right: 3px;
+      bottom: 3px;
+      background: rgb(136 195 233 / 76%);
       border-radius: 50%;
     }
     @keyframes arotate {
