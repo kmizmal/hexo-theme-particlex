@@ -42,8 +42,7 @@ archive_generator:
 
 # 3. 配置
 
-> 请根据目录下的`_config.yml.exmple`填写`_config.yml`
-> 也许你可以直接重命名一份喵
+> 主题目录下的`_config.yml`
 
 ## 3.1. 基本配置
 
