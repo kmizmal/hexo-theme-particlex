@@ -2,16 +2,16 @@
 # https://github.com/theme-particlex/hexo-theme-particlex
 
 # Avatar image
-avatar: /images/avatar.png
+avatar: https://img.zmal.top/avatar.png
 
-arrow: /images/Arrow.ico
+arrow: https://img.zmal.top/20250905/Arrow.175qf571ue.ico
 
 # Home page background image
 background:
-  - /images/brackgroud.jpg
+  - https://img.zmal.top/20250905/brackgroud.86tzx1jeol.jpg
 
 # Loading image
-loading: /images/loading.gif
+loading: https://img.zmal.top/20250905/loading.7i0qd0vvo5.gif
 
 # Optional colors for category and tag
 colors:
