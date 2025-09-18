@@ -1,37 +1,4 @@
 (function () {
-    // const prismCoreURL = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0";
-    // const componentURL = prismCoreURL + "/components/";
-    // const pluginURL = prismCoreURL + "/plugins/";
-    // let codeBlocks;
-    // const langMap = {
-    //     c: "c", cpp: "cpp", java: "java", python: "python",
-    //     js: "javascript", javascript: "javascript", json: "json",
-    //     html: "markup", xml: "markup", bash: "bash", shell: "bash",
-    //     sh: "bash", md: "markdown", markdown: "markdown",
-    //     yaml: "yaml", yml: "yaml", go: "go", php: "php", css: "css"
-    // };
-
-    // const loadScript = (src) => new Promise((resolve, reject) => {
-    //     const s = document.createElement("script");
-    //     s.src = src;
-    //     s.defer = true;
-    //     s.onload = resolve;
-    //     s.onerror = reject;
-    //     document.body.appendChild(s);
-    // });
-    // const detectLangs = () => {
-    //     const langs = new Set();
-    //     codeBlocks = document.querySelectorAll("code[class*='language-']");
-    //     codeBlocks.forEach((code) => {
-    //         const match = code.className.match(/language-([\w-]+)/);
-    //         if (match) {
-    //             const raw = match[1].toLowerCase();
-    //             const mapped = langMap[raw] || raw;
-    //             if (mapped !== "none") langs.add(mapped);
-    //         }
-    //     });
-    //     return [...langs];
-    // };
     const codeMean = () => {
         const codeBlocks = document.querySelectorAll("code[class*='language-']");
 
@@ -49,14 +16,15 @@
             const copyDiv = document.createElement("div");
             copyDiv.className = "copycode";
 
-            //创建代码语言指示器
+            // 检查是否有有效的语言标记，并且语言不是 "none"
             const lang = code.className.match(/language-([\w-]+)/);
             if (lang) {
                 const langSpan = document.createElement("span");
                 langSpan.className = "code-lang";
-                langSpan.textContent = lang[1].toUpperCase();
+                langSpan.textContent = lang[1].toUpperCase()=="NONE"? "𝑪𝒊𝒂𝒍𝒍𝒐～(∠・ω< )⌒★":lang[1].toUpperCase() ;
                 wrapper.appendChild(langSpan);
             }
+
             // 创建 copy 图标
             const iconCopy = document.createElement("i");
             iconCopy.className = "fa-solid fa-copy fa-fw";
@@ -70,6 +38,7 @@
             copyDiv.appendChild(iconCheck);
 
             wrapper.appendChild(copyDiv);
+
             // 复制事件
             copyDiv.addEventListener("click", () => {
                 const codeText = code.innerText.trim();
@@ -85,24 +54,6 @@
             });
         });
     };
-
-
-    // const loadPrismAndLanguages = async () => {
-    //     // await loadScript(`${prismCoreURL}/prism.min.js`);
-    //     // await loadScript(`${pluginURL}line-numbers/prism-line-numbers.min.js`);
-    //     const langs = detectLangs();
-    //     await Promise.all(
-    //         langs.map((lang) =>
-    //             loadScript(`${componentURL}prism-${lang}.min.js`).catch(() => {
-    //                 console.warn(`Language '${lang}' not found`);
-    //             })
-    //         )
-    //     );
-    //     if (window.Prism) {
-    //         // Prism.highlightAll();  
-    //     }
-    //     codeMean();
-    // };
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", codeMean);
