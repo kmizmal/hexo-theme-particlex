@@ -169,8 +169,8 @@ waline:
 # Twikoo
 # https://github.com/imaegoo/twikoo
 twikoo:
-  enable: false
-  envID:
+  enable: true
+  envID: https://twikoo.zmal.top
   region:
   path: location.pathname
-  lang:
+  lang: zh-cn
