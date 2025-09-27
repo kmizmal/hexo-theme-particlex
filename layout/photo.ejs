@@ -1,0 +1,47 @@
+<div class="photodiv">
+  <div class="info">
+    <span class="date">
+      <span class="icon"><i class="fa-solid fa-calendar fa-fw"></i></span>
+      <%= date(page.date, "YYYY/M/D") %>
+      <span class="icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+      <%= date(page.updated, "YYYY/M/D") %>
+    </span>
+   
+  </div>
+  <% if (theme.crypto.enable && typeof page.secret !== "undefined") { %> <%
+  const CryptoJS = getCryptoJS(); %>
+  <input
+    id="crypto"
+    :class="['input', cryptoStatus]"
+    :disabled="cryptoStatus === 'success'"
+    ref="crypto"
+    placeholder="文章被加密，请输入密码"
+    data-encrypted="<%- CryptoJS.AES.encrypt(page.content, page.secret).toString() %>"
+    data-shasum="<%- CryptoJS.SHA256(page.content).toString() %>"
+    v-model="crypto"
+  />
+  <transition name="fade">
+    <div
+      class="content"
+      ref="content"
+      v-show="cryptoStatus === 'success'"
+    ></div>
+  </transition>
+  <% } else { %>
+  <div class="content" v-pre><%- page.content %></div>
+  <% } %>
+  <script>
+    document.querySelectorAll("p img").forEach((img, index) => {
+      const row = Math.floor(index / 2);
+      const col = index % 4;
+
+      const horizontalOffset =
+        (col % 2 === 0 ? 1 : -1) * (Math.random() * 6 + 3);
+      const verticalOffset = (row % 2 === 0 ? 1 : -1) * (Math.random() * 4 + 2);
+
+      img.style.left = horizontalOffset + "%";
+      img.style.top = verticalOffset + "%";
+      img.style.rotate = `${(horizontalOffset + verticalOffset) / 5}deg`;
+    });
+  </script>
+</div>

@@ -55,16 +55,25 @@ body {
     justify-content: center;
     align-items: center;
   }
-  #scrollProgressBar{
-     position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 0; 
-        height: 3px; 
-        box-shadow: 0 0 3px #999; 
-        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
-        z-index: 999999; 
-        transition: width 0.3s linear;
+  #scrollProgressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    box-shadow: 0 0 3px #999;
+    background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+    );
+    z-index: 999999;
+    transition: width 0.3s linear;
   }
 }
 
@@ -138,7 +147,7 @@ a {
         border-radius: 10px;
         color: #fff;
         padding: 10px 15px;
-        transition: background 0.25s, border 0.25s, color 0.25s;
+        transition: border 0.25s, color 0.25s;
 
         &:hover {
           background: #fff !important;
@@ -290,7 +299,7 @@ a {
         color: #5c6b72;
         padding: 8px 0;
         display: block;
-        transition: background 0.25s, color 0.25s;
+        transition: color 0.25s;
 
         &:hover {
           background: #66afef;
@@ -592,7 +601,7 @@ a {
     }
 
     .page-num {
-      transition: background 0.25s, color 0.25s;
+      transition: color 0.25s;
 
       &:hover {
         background: #66afef;
@@ -674,7 +683,7 @@ a {
   line-height: 50px;
   position: fixed;
   top: 0;
-  transition: background 0.25s ease-out, top 0.25s ease-out;
+  transition: top 0.25s ease-out;
   width: 100vw;
   z-index: 1004;
 
@@ -844,7 +853,7 @@ a {
   font-size: 15px;
   height: 50px;
   text-indent: 20px;
-  transition: background 0.25s, border 0.25s, box-shadow 0.25s;
+  transition: all 0.25s;
   width: 100%;
   font-family: "Fira Code", "Noto Sans SC", monospace;
 
@@ -1070,6 +1079,19 @@ video,
 .page-current {
   user-select: none;
 }
-#comment .twikoo div{
+#comment .twikoo div {
   position: static;
+}
+
+code {
+  display: inline-block;
+  font-family: "Fira Code", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  word-wrap: break-word;
+  tab-size: 4;
+  background: #8ecbf922;
+  color: #f8a3c2;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
 }
