@@ -1083,7 +1083,7 @@ video,
   position: static;
 }
 
-code {
+code:not(pre code) {
   display: inline-block;
   font-family: "Fira Code", monospace;
   font-size: 0.9rem;
