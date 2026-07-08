@@ -1,60 +1,31 @@
 # Hexo-Theme-ParticleX
-
-[ParticleX](https://github.com/theme-particlex/hexo-theme-particlex) 主题，诞生原因是因为原来的 [Particle](https://github.com/korilin/hexo-theme-particle) 主题不维护了，但是我觉得还是很好的。
-
-原来用的是 Vue 2 + Ant Design Vue 1，现更新到 Vue 3，去除 Ant Design Vue 采用自定义样式，图标更改为 Font Awesome 6，CDN 改为 ZStatic。
-
+[This document is also available in English](en-README.md)
 原项目 `README.md` 里说：
 
 > 目前有 Full、Night 和 Maiden **两个**主题样式。
 
-但是更改后只有一种了，如果你想改颜色就在 `main.css` 里替换吧。
+但是更改后只有一种了，如果你想改颜色就在 `main.scss` 里替换吧。
 
 # 1. 演示
 
--   [GitHub Pages](https://argvchs.github.io)
+-   [GitHub Pages](https://kmizmal.github.io/)
 -   [Netlify](https://argvchs.netlify.app)
--   [Vercel](https://argvchs.vercel.app)
+-   [Vercel](https://zmal-blog.vercel.app/)
 
 # 2. 安装
 
 ```bash
-cd themes
-git clone https://github.com/theme-particlex/hexo-theme-particlex.git particlex --depth=1
+git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
+pnpm add sass hexo-renderer-sass-next
 ```
-
-然后在根目录 `_config.yml` 设置主题为 ParticleX 即可。
+参考[配置](#3-配置)完成配置   
+然后在根目录 `_config.yml` 设置主题为 ParticleX
 
 ```yaml
 theme: particlex
 ```
 
-## 2.1. 关闭自带代码高亮
-
-Hexo 有自带的代码高亮，但是和 ParticleX 的不兼容。
-
-```yaml
-highlight:
-    enable: false
-prismjs:
-    enable: false
-```
-
-如果使用 Hexo 7.0.0 之后的版本只需要修改为：
-
-```yaml
-syntax_highlighter:
-```
-
-如果使用 Pandoc 还需要设置一下：
-
-```yaml
-pandoc:
-    extra:
-        - no-highlight:
-```
-
-## 2.2. 禁用年度月度归档
+## 2.1 禁用年度月度归档
 
 Hexo 会自动生成年度月度归档，可是 ParticleX 主题没有这个功能。~~我太懒了~~
 
@@ -71,28 +42,34 @@ archive_generator:
 
 # 3. 配置
 
+> 主题目录下的`_config.yml`
+
 ## 3.1. 基本配置
 
 `background` 参数是一个列表，打开时会随机加载一个背景。
 
 ```yaml
-# Avatar image
+# 头像
 avatar: /images/avatar.jpg
 
-# Home page background image
+# 主页背景
 background:
     - /images/background.jpg
 
-# Loading image
+# 加载动画gif
 loading: /images/loading.gif
 
-# Optional colors for category and tag
+# category and tag中标签的随机颜色列表
 colors:
     - "#ffa2c4"
     - "#00bcd4"
     - "#03a9f4"
     - "#00a596"
     - "#ff7d73"
+    - "#f5bcd0"
+    - "#aee8fe"
+    - "#66CCFF"
+    - "#39C5BB"
 ```
 
 ## 3.2. 内容配置
@@ -105,7 +82,7 @@ colors:
 # ParticleX theme icon is adopts the Font Awesome 6
 # https://fontawesome.com
 
-# Main menu navigation
+# 主菜单导航
 menu:
     Home:
         name: house
@@ -136,7 +113,7 @@ menu:
 图标链接 `iconLinks` 配置和导航栏配置相同。
 
 ```yaml
-# Side info card
+# 侧面信息卡
 card:
     enable: true
     description: |
@@ -145,6 +122,7 @@ card:
     iconLinks:
     friendLinks:
         Argvchs: https://argvchs.github.io
+        kmizmal: https://blog.zmal.top
 ```
 
 ### 3.2.3. 页脚
@@ -154,14 +132,18 @@ card:
 如没有需要显示备案消息的可以关闭。
 
 ```yaml
-# Footer info
+# 页脚
 footer:
+  # 底部起始时间yyyy
     since: 2022
-    # Customize the server domain name ICP
+    # ICP备案信息
     ICP:
         enable: false
         code:
         link:
+    #是否开启访问亮统计 https://finicounter.eu.org/
+    visitors:
+        enable: true
 ```
 
 ## 3.3. 功能配置
@@ -185,16 +167,19 @@ polyfill:
 
 ### 3.3.2. 代码高亮
 
-使用 Highlight.js 代码高亮。
+使用 PrismJS.js 代码高亮。
 
-样式可以在[这里](https://highlightjs.org/static/demo)选择，默认为 GitHub。
+可以在[官网](https://prismjs.com/examples.html)找到其他样式，注意prism-前缀  
+或者你也可以来我的[blog](https://blog.zmal.top/2025/0720/example-of-prismjs-styles)查阅
 
 ```yaml
-# Highlight.js
-# https://highlightjs.org
-highlight:
+prismjs:
+    # 是否启用高亮
     enable: true
-    style: github
+    # 高亮样式
+    theme: prism-tomorrow
+    # 是否启用行号插件
+    lineNumbers: true
 ```
 
 ### 3.3.3. 数学渲染
@@ -209,7 +194,8 @@ math:
 
 ### 3.3.4. 图片预览
 
-简单的点击图片放大缩小的预览。
+~~简单的点击图片放大缩小的预览。（被我玩坏了喵~~   
+还没修好
 
 ```yaml
 # Image preview
@@ -249,7 +235,8 @@ crypto:
 嵌入到 Archives 中的搜索。
 
 目前只支持搜索文档标题。
-
+(玩坏了喵，等修)
+~~也许本来就不好用~~
 ```yaml
 # Search
 search:
@@ -355,3 +342,5 @@ twikoo:
 # 4. 写在最后
 
 本项目采用 MIT 开源许可证，欢迎大家贡献，你可以随意打开一个 Issue 来进行提问，有任何改进想法都可以进行 Fork，期待您的 Pull Request！
+
+argvchs 好久没更新了喵，此仓库算是魔改版本，并未和上游项目联系，如果在使用中遇到问题或者有什么好玩的想法欢迎提 Issue

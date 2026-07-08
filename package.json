@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theme-particlex/hexo-theme-particlex.git"
+    "url": "git+https://github.com/kmizmal/hexo-theme-particlex.git"
   },
   "keywords": [
     "hexo",
@@ -20,11 +20,12 @@
   "author": "Argvchs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/theme-particlex/hexo-theme-particlex/issues"
+    "url": "https://github.com/kmizmal/hexo-theme-particlex/issues"
   },
-  "homepage": "https://github.com/theme-particlex/hexo-theme-particlex#readme",
+  "homepage": "https://github.com/kmizmal/hexo-theme-particlex#readme",
   "dependencies": {
     "hexo-helper-crypto": "^1.2.1",
+    "hexo-renderer-sass-next": "^0.1.3",
     "hexo-renderer-ejs": "^2.0.0"
   }
 }
