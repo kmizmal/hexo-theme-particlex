@@ -4,14 +4,14 @@
 # Avatar image
 avatar: https://img.zmal.top/avatar.png
 
-arrow: https://img.zmal.top/20250905/Arrow.175qf571ue.ico
+arrow: https://img.zmal.top/2025/0905/Arrow.175qf571ue.ico
 
 # Home page background image
 background:
-  - https://img.zmal.top/20250905/brackgroud.86tzx1jeol.jpg
+  - https://img.zmal.top/2025/0905/brackgroud.86tzx1jeol.jpg
 
 # Loading image
-loading: https://img.zmal.top/20250905/loading.7i0qd0vvo5.gif
+loading: https://img.zmal.top/2025/0905/loading.7i0qd0vvo5.gif
 
 # Optional colors for category and tag
 colors:
@@ -77,8 +77,10 @@ footer:
   # Customize the server domain name ICP
   ICP:
     enable: true
-    code: 萌ICP备20250124号
-    link: https://icp.gov.moe/?keyword=20250124
+   # code: 萌ICP备20250124号
+    code: 冀 ICP 备 2026026959 号
+    link: https://beian.miit.gov.cn/
+    #link: https://icp.gov.moe/?keyword=20250124
 
   visitors:
     enable: true
