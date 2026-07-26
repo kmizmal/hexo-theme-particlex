@@ -622,9 +622,14 @@ a {
       color: var(--color-link);
       text-align: center;
 
-      @media screen and (max-width: 430px) {
-        font-size: var(--font-size-base);
+      @media (max-width: var(--breakpoint-mobile)) {
+        font-size: var(--font-size-xl);
       }
+
+      @media screen and (max-width: 430px) {
+        font-size: var(--font-size-lg);
+      }
+    }
     }
 
     .category-and-date {
@@ -654,6 +659,10 @@ a {
 
     .description {
       padding: var(--spacing-xl) 0;
+
+      @media (max-width: var(--breakpoint-mobile)) {
+        font-size: var(--font-size-sm);
+      }
 
       @media screen and (max-width: 430px) {
         display: none;
