@@ -870,6 +870,17 @@ a {
         margin: auto;
         min-width: 200px;
         width: 80%;
+
+        .item-icon {
+          min-width: 20px;
+          max-width: 50px;
+          width: 10%;
+        }
+
+        .item-label {
+          min-width: 100px;
+          width: 20%;
+        }
       }
 
       a {
