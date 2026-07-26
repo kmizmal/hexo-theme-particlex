@@ -553,13 +553,13 @@ a {
     }
 
     @media (max-width: var(--breakpoint-mobile)) {
-      height: 350px;
-      width: 350px;
+      height: min(350px, calc(100vw - 40px));
+      width: min(350px, calc(100vw - 40px));
 
       .info {
         background: rgba(255, 255, 255, 0.65);
-        height: 350px;
-        width: 350px;
+        height: min(350px, calc(100vw - 40px));
+        width: min(350px, calc(100vw - 40px));
       }
     }
   }
