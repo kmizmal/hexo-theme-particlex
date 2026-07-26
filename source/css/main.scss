@@ -175,8 +175,8 @@ body {
     display: flex;
     width: var(--scroll-to-top-size);
     height: var(--scroll-to-top-size);
-    right: var(--scroll-to-top-right);
-    bottom: var(--scroll-to-top-bottom);
+    right: calc(var(--scroll-to-top-right) + env(safe-area-inset-right));
+    bottom: calc(var(--scroll-to-top-bottom) + env(safe-area-inset-bottom));
     justify-content: center;
     align-items: center;
     transition: opacity var(--transition-base) ease-out;
@@ -321,7 +321,9 @@ a {
 
 #footer {
   font-size: var(--font-size-sm);
-  padding-bottom: var(--spacing-xl);
+  padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
   text-align: center;
   width: 100%;
 
@@ -849,6 +851,8 @@ a {
   #mobile-menu {
     min-height: 50px;
     text-align: center;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 
     @media (min-width: 900px) {
       display: none;
