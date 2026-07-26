@@ -615,6 +615,10 @@ a {
     &:hover {
       box-shadow: var(--shadow-sm);
       transform: translate(-5px, -5px);
+
+      @media (max-width: var(--breakpoint-mobile)) {
+        transform: none;
+      }
     }
 
     .post-title {
