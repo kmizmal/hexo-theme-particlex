@@ -843,7 +843,7 @@ a {
   #desktop-menu {
     height: 50px;
 
-    @media (max-width: 900px) {
+    @media (max-width: var(--breakpoint-mobile)) {
       display: none;
     }
 
@@ -867,7 +867,7 @@ a {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
 
-    @media (min-width: 900px) {
+    @media (min-width: var(--breakpoint-mobile)) {
       display: none;
     }
 
@@ -1190,14 +1190,14 @@ a {
 }
 
 // 响应式调整
-@media (max-width: 900px) {
+@media (max-width: var(--breakpoint-mobile)) {
   ul,
   ol {
     padding-left: 20px;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: var(--breakpoint-mobile)) {
   ul,
   ol {
     padding-left: 40px;
