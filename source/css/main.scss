@@ -677,7 +677,11 @@ a {
 
     .post-tags {
       line-height: 1.7;
-      padding-right: 69px;
+      padding-right: 80px;
+
+      @media (max-width: var(--breakpoint-mobile)) {
+        padding-right: 0;
+      }
 
       .tag {
         display: inline-block;
