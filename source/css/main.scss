@@ -927,6 +927,10 @@ a {
     max-width: 80%;
     border-radius: 10px;
     table-layout: fixed;
+
+    @media (max-width: var(--breakpoint-mobile)) {
+      max-width: 100%;
+    }
   }
   .code-wrapper {
     position: relative;
