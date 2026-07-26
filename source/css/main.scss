@@ -849,7 +849,7 @@ a {
   #desktop-menu {
     height: 50px;
 
-    @media (max-width: var(--breakpoint-mobile)) {
+    @media (max-width: 900px) {
       display: none;
     }
 
@@ -873,7 +873,7 @@ a {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
 
-    @media (min-width: var(--breakpoint-mobile)) {
+    @media (min-width: 900px) {
       display: none;
     }
 
@@ -902,6 +902,7 @@ a {
 
         .item-label {
           min-width: 100px;
+          max-width: 150%;
           width: 20%;
         }
       }
