@@ -20,7 +20,6 @@ const useHome = () => {
   };
 
   Vue.onMounted(() => {
-    console.log("Home composable mounted");
     initHomeBackground();
   });
 
@@ -152,119 +151,8 @@ const useCrypto = () => {
   };
 };
 
-// useHighlight - 代码高亮功能
-const useHighlight = () => {
-  const copying = Vue.ref(false);
-  const supportedLanguages = ['bash', 'javascript', 'python', 'html', 'css', 'batch'];
-  const cdnBase = 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/es/languages/';
-
-  const loadLanguage = async (language) => {
-    if (typeof hljs === 'undefined') return false;
-    try {
-      const langModule = await import(
-        /* webpackIgnore: true */
-        `${cdnBase}${language}.min.js`
-      );
-      hljs.registerLanguage(language, langModule.default);
-      return true;
-    } catch (error) {
-      console.warn(`加载语言模块 ${language} 失败:`, error);
-      return false;
-    }
-  };
-
-  const getLanguageClass = (element) => {
-    const classElement = element.querySelector('code') || element;
-    return [...classElement.classList]
-      .find(c => c.startsWith('language-'))
-      ?.replace('language-', '') || 'plaintext';
-  };
-
-  const generateCodeHtml = (highlighted, language) => {
-    return `
-      <code class="code-content hljs">${highlighted}</code>
-      <div class="language">${language}</div>
-      <div class="copycode" aria-label="复制代码">
-        <i class="fa-solid fa-copy"></i>
-        <i class="fa-solid fa-check"></i>
-      </div>
-    `;
-  };
-
-  const addLineNumbers = (preElement) => {
-    if (window.hljsLineNumbersBlock) {
-      const content = preElement.querySelector('.code-content');
-      window.hljsLineNumbersBlock(content, { singleLine: true });
-    }
-  };
-
-  const addCopyHandler = (preElement, code) => {
-    const copyButton = preElement.querySelector('.copycode');
-    copyButton.addEventListener('click', async () => {
-      if (copying.value) return;
-      
-      copying.value = true;
-      copyButton.classList.add('copied');
-      
-      try {
-        await navigator.clipboard.writeText(code);
-        await sleep(1500);
-      } catch (error) {
-        console.error('复制失败:', error);
-        const textArea = document.createElement('textarea');
-        textArea.value = code;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      } finally {
-        copyButton.classList.remove('copied');
-        copying.value = false;
-      }
-    });
-  };
-
-  const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  };
-
-  const highlight = async () => {
-    if (typeof hljs === 'undefined') return;
-    const codes = document.querySelectorAll("pre");
-    
-    await Promise.all(Array.from(codes).map(async (preElement) => {
-      const code = preElement.textContent;
-      const language = getLanguageClass(preElement);
-
-      if (!hljs.getLanguage(language) && !await loadLanguage(language)) {
-        console.warn(`语言 ${language} 不支持，使用纯文本显示`);
-      }
-
-      try {
-        const highlighted = hljs.highlightAuto(code, supportedLanguages).value;
-        preElement.innerHTML = generateCodeHtml(highlighted, language);
-        addLineNumbers(preElement);
-        addCopyHandler(preElement, code);
-      } catch (error) {
-        console.error('代码高亮失败:', error);
-      }
-    }));
-  };
-
-  const initHighlight = () => {
-    if (typeof hljs === 'undefined') return;
-    hljs.configure({
-      ignoreUnescapedHTML: true,
-      languages: supportedLanguages
-    });
-  };
-
-  return {
-    copying,
-    highlight,
-    initHighlight
-  };
-};
+// 代码高亮由 Hexo 原生 syntax_highlighter(PrismJS) 负责；
+// 主题自定义的 hljs 高亮模块已移除（此前提及的 useHighlight 为永不执行的死代码）。
 
 /**
  * 主应用入口
@@ -289,7 +177,6 @@ const app = Vue.createApp({
     const { previewShow, preview, previewContent, initPreview } = usePreview();
     const { renderMath } = useMath();
     const { crypto, cryptoStatus, cryptoInput, content } = useCrypto();
-    const { copying, highlight, initHighlight } = useHighlight();
 
     const render = () => {
       renderers.value.forEach(renderer => {
@@ -376,11 +263,6 @@ const app = Vue.createApp({
       window.addEventListener("load", () => {
         loading.value = false;
         handleScroll();
-        
-        if (typeof hljs !== 'undefined') {
-          initHighlight();
-          renderers.value.push(highlight);
-        }
         
         if (typeof renderMathInElement !== 'undefined') {
           renderers.value.push(renderMath);

@@ -85,47 +85,62 @@
         }
     }
 
-    // 获取一言 API
-    // 限制调用频率为每分钟一次
-    async function fetchHitokoto() {
-        if (!fetchHitokoto.lastCall) {
-            fetchHitokoto.lastCall = 0;
-        }
+    // 获取一言 API（底层去重请求，供侧边卡片与点击特效共用，避免重复请求）
+    async function requestHitokoto() {
+        if (requestHitokoto._inflight) return requestHitokoto._inflight;
 
-        const now = Date.now();
-        const MIN_INTERVAL = 60000; // 1分钟
-
-        if (now - fetchHitokoto.lastCall < MIN_INTERVAL) {
-            console.warn("调用频率太快，已被限制");
-            return;
-        }
-        
-        fetchHitokoto.lastCall = now;
-
-        try {
-            const response = await fetch('https://v1.hitokoto.cn');
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        requestHitokoto._inflight = (async () => {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 5000); // 5s 超时
+            try {
+                const response = await fetch('https://v1.hitokoto.cn', { signal: controller.signal });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (!data || !data.hitokoto) throw new Error('响应中没有 hitokoto 字段');
+                return data;
+            } catch (error) {
+                console.warn('获取一言失败:', error.message || error);
+                return null;
+            } finally {
+                clearTimeout(timer);
+                requestHitokoto._inflight = null;
             }
-            
-            const { hitokoto } = await response.json();
-            
-            if (hitokoto) {
-                quotes.push(hitokoto);
-                console.log("获取一言成功:", hitokoto);
-                
-                // 限制数组大小，避免内存占用过大
-                if (quotes.length > 50) {
-                    quotes.shift(); // 移除最旧的语录
-                }
+        })();
+
+        return requestHitokoto._inflight;
+    }
+
+    // 填充侧边卡片的一言（页面加载时调用一次，与点击特效共用同一去重请求）
+    function fillCardHitokoto() {
+        const el = document.querySelector("#hitokoto_text");
+        if (!el) return;
+        requestHitokoto().then((data) => {
+            if (data && data.hitokoto) {
+                el.textContent = data.hitokoto;
+                el.href = "https://hitokoto.cn/?uuid=" + data.uuid;
+                if (quotes.length < 50) quotes.push(data.hitokoto);
             } else {
-                console.error("获取一言失败：响应中没有 hitokoto 字段");
+                el.textContent = "愿你今天也有好心情~";
             }
-        } catch (error) {
-            console.error("请求出错:", error);
+        }).catch(() => {
+            el.textContent = "愿你今天也有好心情~";
+        });
+    }
+
+    // 点击特效触发的补充（保留 1 分钟节流，避免频繁刷新语录池）
+    async function fetchHitokoto() {
+        const now = Date.now();
+        if (now - (fetchHitokoto._last || 0) < 60000) return;
+        fetchHitokoto._last = now;
+
+        const data = await requestHitokoto();
+        if (data && data.hitokoto && quotes.length < 50) {
+            quotes.push(data.hitokoto);
         }
     }
+
+    // 暴露统一请求入口，供其他脚本复用（共用去重后的请求）
+    window.zmalHitokoto = { fetch: requestHitokoto };
 
     // 绑定点击事件
     $("body").on("click", function(e) {
@@ -133,4 +148,7 @@
             showQuoteAnimation(e);
         }
     });
+
+    // 页面加载后填充侧边卡片一言（与点击特效共用去重请求）
+    $(fillCardHitokoto);
 })();

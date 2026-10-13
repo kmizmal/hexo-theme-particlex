@@ -11,7 +11,7 @@
       <% Object.entries(theme.card.iconLinks).forEach(([key, value])=> { %>
       <span class="icon-link">
         <a href="<%- url_for(value.link) %>">
-          <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw"></i>
+          <i class="fa-<%- value.theme || 'solid' %> fa-<%- value.name || 'circle' %> fa-fw"></i>
         </a>
       </span>
       <% }); %>
@@ -29,17 +29,6 @@
         <a href="#" id="hitokoto_text">一言获取中~</a>
       </p>
     </div>
-
-    <script>
-      fetch("https://v1.hitokoto.cn")
-        .then((response) => response.json())
-        .then((data) => {
-          const hitokoto = document.querySelector("#hitokoto_text");
-          hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`;
-          hitokoto.innerText = data.hitokoto;
-        })
-        .catch(console.error);
-    </script>
   </div>
   <% } %>
 </div>

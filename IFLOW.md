@@ -51,7 +51,7 @@ particlex/
 │   │   ├── main.js      # 主JavaScript（Vue应用 + Composables）
 │   │   ├── canvas.js    # 粒子效果
 │   │   ├── span.js      # 点击文字特效
-│   │   └── PrismJS.js   # PrismJS 代码高亮
+│   │   └── PrismJS.js   # PrismJS 代码块展开 / 视口适配（非语法高亮，真正高亮由 Hexo 完成）
 │   └── images/          # 图片资源
 └── scripts/             # Hexo脚本
     └── translate-title.js  # 标题翻译脚本

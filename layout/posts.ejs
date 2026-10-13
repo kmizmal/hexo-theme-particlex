@@ -1,12 +1,14 @@
 <%
-    let posts = site.posts,
-        current = (page.current - 1) * config.index_generator.per_page;
-    posts.data.sort((a, b) => {
+    const perPage = config.index_generator.per_page || 10;
+    // 拷贝一份，避免原地修改 Hexo 全局 posts 集合（site.posts.data 被多模板共享）
+    let posts = [...site.posts.data];
+    const current = (page.current - 1) * perPage;
+    posts.sort((a, b) => {
         let x = a.pinned ?? 0,
             y = b.pinned ?? 0;
         return x === y ? b.date - a.date : y - x;
     });
-    posts = posts.slice(current, config.index_generator.per_page + current);
+    posts = posts.slice(current, current + perPage);
 %>
 <% posts.forEach((post) => { %>
 <div class="post">

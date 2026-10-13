@@ -84,8 +84,8 @@ footer:
 
   visitors:
     enable: true
-# Polyfill
-# https://polyfill.io
+# Polyfill（实际通过 alicdn 镜像加载，已规避被劫持的 polyfill.io 域名；现代浏览器可设 enable: false 关闭）
+# https://polyfill.alicdn.com
 polyfill:
   enable: true
   features:
@@ -97,6 +97,8 @@ prismjs:
   theme: prism-tomorrow
   lineNumbers: true
 
+# 代码高亮说明：本主题高亮由 Hexo 原生 syntax_highlighter(PrismJS) 负责。
+# 以下 highlight(自定义 hljs) 已弃用，保留开关仅作占位，请勿开启（开启会与 PrismJS 冲突）。
 # https://highlightjs.org/
 highlight:
   enable: false

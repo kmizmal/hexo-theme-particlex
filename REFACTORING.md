@@ -79,7 +79,9 @@
 - 减少重复计算
 - 优化事件处理逻辑
 
-#### TopIndex.js（顶部进度条）
+#### TopIndex（顶部进度条，逻辑已并入 main.js）
+
+> 原 `TopIndex.js` 文件已不存在，顶部进度条逻辑现位于 `main.js` 的滚动状态处理中。以下性能说明同样适用。
 
 **改进：**
 - 使用 `requestAnimationFrame` 优化滚动性能
@@ -264,8 +266,8 @@
 
 ### 依赖项
 
-- Vue.js 3.3.7+
-- jQuery 2.0.2+
+- Vue.js 3.5.22+
+- jQuery 3.7.1+
 - Font Awesome 6.4.2+
 - PrismJS（可选）
 
