@@ -109,6 +109,14 @@ math:
 preview:
   enable: true
 
+# 标题翻译（供根配置 permalink 的 :Translate_title 使用）
+# 默认开启：调用 LibreTranslate 兼容 API 翻译标题生成英文 slug
+# API 不可用时自动回退到中文 slug（permalink 仍可用）。可关闭或替换端点。
+translate:
+  enable: true
+  api: "https://asfag654-libretranslate.hf.space/translate"
+  timeout: 0
+
 # Article encryption
 crypto:
   enable: false

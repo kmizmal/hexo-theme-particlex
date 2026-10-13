@@ -1098,6 +1098,26 @@ a {
   }
 }
 
+// 图片预览（theme.preview.enable）
+#preview {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: zoom-out;
+
+  #preview-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 24px rgb(0 0 0 / 50%);
+    border-radius: var(--border-radius-sm, 4px);
+  }
+}
+
 .slide {
   &-enter-active,
   &-leave-active {

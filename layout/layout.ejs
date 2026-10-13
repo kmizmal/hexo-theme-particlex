@@ -47,13 +47,13 @@ config.title; if (is_archive()) title = "Archives | " + config.title; %>
       <% if (theme.Background_particles.enable) { %>
       <script src="<%- url_for('/js/canvas.js') %>"></script>
       <% } %>
-      <!-- <% if (theme.preview.enable) { %>
+      <% if (theme.preview.enable) { %>
       <transition name="fade">
         <div id="preview" ref="preview" v-show="previewShow">
           <img id="preview-content" ref="previewContent" />
         </div>
       </transition>
-      <% } %> -->
+      <% } %>
       <% if (theme.TopIndex.enable) { %>
       <div id="scrollProgressBar" :style="{ width: scrollPercent + '%' }"></div>
       <% } %>
