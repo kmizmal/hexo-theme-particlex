@@ -3,6 +3,10 @@
 // 标题翻译（供根配置 permalink 中的 :Translate_title 使用）
 // 默认调用 LibreTranslate 兼容 API 翻译标题，生成英文 slug。
 // 可在主题 _config.yml 的 translate 中关闭、替换端点或调整超时。
+//
+// 优先级：front-matter 里手写的 Translate_title > 缓存 > 翻译 API > 清洗后的标题。
+// front-matter 优先是刻意的：让 URL 随版本库走，可复现，
+// 不受外部翻译服务可用性影响（否则同一篇文章在不同时间构建会得到不同链接）。
 
 const fs = require('hexo-fs');
 const path = require('path');
@@ -82,6 +86,12 @@ async function translate(title, source) {
 hexo.extend.filter.register(
   'before_post_render',
   async function (data) {
+    // 文章自己在 front-matter 里声明了 Translate_title 就用它，不再走缓存/API。
+    // 这样 slug 是版本库里的显式数据：换机器、上 CI 都能生成同样的 URL。
+    if (data.Translate_title && String(data.Translate_title).trim()) {
+      return data;
+    }
+
     const sanitizedTitle = sanitizeTitle(data.title);
     // 默认回退：清洗后的标题即 slug，保证 permalink 始终可用
     data.Translate_title = sanitizedTitle;
