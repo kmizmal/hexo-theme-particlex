@@ -20,10 +20,10 @@
         <% Object.entries(theme.menu).forEach(([key, value]) => { %>
         <a href="<%- url_for(value.link) %>">
           <div class="item">
-            <div style="min-width: 20px; max-width: 50px; width: 10%">
+            <div class="item-icon">
               <i class="fa-<%- value.theme || 'solid' %> fa-<%- value.name || 'circle' %> fa-fw"></i>
             </div>
-            <div style="min-width: 100px; max-width: 150%; width: 20%">
+            <div class="item-label">
               <%= key %>
             </div>
           </div>

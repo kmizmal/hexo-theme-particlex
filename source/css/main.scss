@@ -175,8 +175,8 @@ body {
     display: flex;
     width: var(--scroll-to-top-size);
     height: var(--scroll-to-top-size);
-    right: var(--scroll-to-top-right);
-    bottom: var(--scroll-to-top-bottom);
+    right: calc(var(--scroll-to-top-right) + env(safe-area-inset-right));
+    bottom: calc(var(--scroll-to-top-bottom) + env(safe-area-inset-bottom));
     justify-content: center;
     align-items: center;
     transition: opacity var(--transition-base) ease-out;
@@ -321,7 +321,9 @@ a {
 
 #footer {
   font-size: var(--font-size-sm);
-  padding-bottom: var(--spacing-xl);
+  padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
   text-align: center;
   width: 100%;
 
@@ -434,6 +436,7 @@ a {
 #home-head {
   display: flex;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
 
   #home-background {
@@ -441,6 +444,7 @@ a {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    height: 100dvh;
     left: 0;
     position: absolute;
     top: 0;
@@ -553,13 +557,13 @@ a {
     }
 
     @media (max-width: var(--breakpoint-mobile)) {
-      height: 350px;
-      width: 350px;
+      height: min(350px, calc(100vw - 40px));
+      width: min(350px, calc(100vw - 40px));
 
       .info {
         background: rgba(255, 255, 255, 0.65);
-        height: 350px;
-        width: 350px;
+        height: min(350px, calc(100vw - 40px));
+        width: min(350px, calc(100vw - 40px));
       }
     }
   }
@@ -613,6 +617,10 @@ a {
     &:hover {
       box-shadow: var(--shadow-sm);
       transform: translate(-5px, -5px);
+
+      @media (max-width: var(--breakpoint-mobile)) {
+        transform: none;
+      }
     }
 
     .post-title {
@@ -620,8 +628,12 @@ a {
       color: var(--color-link);
       text-align: center;
 
+      @media (max-width: var(--breakpoint-mobile)) {
+        font-size: var(--font-size-xl);
+      }
+
       @media screen and (max-width: 430px) {
-        font-size: var(--font-size-base);
+        font-size: var(--font-size-lg);
       }
     }
 
@@ -653,6 +665,10 @@ a {
     .description {
       padding: var(--spacing-xl) 0;
 
+      @media (max-width: var(--breakpoint-mobile)) {
+        font-size: var(--font-size-sm);
+      }
+
       @media screen and (max-width: 430px) {
         display: none;
       }
@@ -660,7 +676,11 @@ a {
 
     .post-tags {
       line-height: 1.7;
-      padding-right: 69px;
+      padding-right: 80px;
+
+      @media (max-width: var(--breakpoint-mobile)) {
+        padding-right: 0;
+      }
 
       .tag {
         display: inline-block;
@@ -709,11 +729,11 @@ a {
     .page-omit {
       border-radius: var(--border-radius-sm);
       display: inline-block;
-      height: 35px;
-      line-height: 35px;
+      height: 44px;
+      line-height: 44px;
       margin: 0 var(--spacing-sm);
       padding: var(--spacing-sm);
-      width: 35px;
+      width: 44px;
     }
 
     .current {
@@ -740,6 +760,7 @@ a {
   background: #e6efff;
   display: flex;
   height: 100vh;
+  height: 100dvh;
   justify-content: center;
   position: fixed;
   top: 0;
@@ -849,6 +870,8 @@ a {
   #mobile-menu {
     min-height: 50px;
     text-align: center;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 
     @media (min-width: 900px) {
       display: none;
@@ -870,6 +893,18 @@ a {
         margin: auto;
         min-width: 200px;
         width: 80%;
+
+        .item-icon {
+          min-width: 20px;
+          max-width: 50px;
+          width: 10%;
+        }
+
+        .item-label {
+          min-width: 100px;
+          max-width: 150%;
+          width: 20%;
+        }
       }
 
       a {
@@ -903,6 +938,10 @@ a {
     max-width: 80%;
     border-radius: 10px;
     table-layout: fixed;
+
+    @media (max-width: var(--breakpoint-mobile)) {
+      max-width: 100%;
+    }
   }
   .code-wrapper {
     position: relative;
@@ -1178,14 +1217,14 @@ a {
 }
 
 // 响应式调整
-@media (max-width: 900px) {
+@media (max-width: var(--breakpoint-mobile)) {
   ul,
   ol {
     padding-left: 20px;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: var(--breakpoint-mobile)) {
   ul,
   ol {
     padding-left: 40px;
