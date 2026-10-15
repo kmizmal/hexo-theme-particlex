@@ -804,7 +804,9 @@ a {
   }
 
   #loading-circle {
-    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+    // 原为霓虹彩虹渐变（#14ffe9 → #ffeb3b → #ff00e0），与站点配色无关，
+    // 改用主题自己的品牌渐变，与按钮等元素保持一致。
+    background: var(--color-gradient-primary);
     border-radius: 50%;
     height: 50vmin;
     width: 50vmin;
@@ -821,7 +823,9 @@ a {
       left: 3px;
       right: 3px;
       bottom: 3px;
-      background: rgb(136 195 233 / 76%);
+      // 与 #loading 背景同色（--color-scrollbar-track），
+      // 让渐变只呈现为一圈干净的圆环，而不是糊成一团的半透明色块。
+      background: #e6efff;
       border-radius: 50%;
     }
     @keyframes arotate {
