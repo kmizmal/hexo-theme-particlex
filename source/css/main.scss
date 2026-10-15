@@ -775,7 +775,9 @@ a {
 
 #loading {
   align-items: center;
-  background: #e6efff;
+  // 背景改为半透明：圆环之外的整屏背景会透出后面的一点内容（页面底色、顶部导航栏）；
+  // 圆心内部由 #loading-circle:after 的不透明 #e6efff 维持原样。
+  background: rgb(230 239 255 / 80%);
   display: flex;
   height: 100vh;
   height: 100dvh;
