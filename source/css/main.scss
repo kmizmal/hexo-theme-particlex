@@ -252,6 +252,17 @@ a {
   }
 }
 
+// 固定导航栏 #menu 高 var(--menu-height)，且不占文档流（position: fixed），
+// 必须为内容让出这段高度，否则文章/归档页顶部会被压住。
+// 实测（390×844 与 1440×900 一致）：导航栏占 y 0~50，.article h1 位于 y 20~59，
+// 即标题顶部有 30px 被遮挡。
+// 不在此列的两类页面：首页 #home-head 是整屏 hero，设计上就在透明导航栏之下；
+// photo 页 .photodiv 另有 margin-top 自行处理。
+#archives,
+.article {
+  margin-top: var(--menu-height);
+}
+
 #archives {
   .categories-tags {
     margin: auto;
