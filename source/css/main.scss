@@ -1,4 +1,13 @@
 // ============================================
+// 断点变量（Sass 变量）
+// ============================================
+// 注意：CSS 自定义属性（var()）不能用于 @media 条件，
+// 规范与浏览器均不支持，写在 @media 里整个块会被判为无效而永不生效。
+// 因此断点必须用 Sass 变量，由 Sass 在编译期替换成字面量。
+$breakpoint-mobile: 900px;
+$breakpoint-tablet: 1200px;
+
+// ============================================
 // CSS 变量定义
 // ============================================
 :root {
@@ -117,9 +126,7 @@
   --scroll-to-top-bottom: 2.5rem;
   --scroll-to-top-right: 1rem;
 
-  // 断点
-  --breakpoint-mobile: 900px;
-  --breakpoint-tablet: 1200px;
+  // 断点见文件顶部 Sass 变量 $breakpoint-mobile / $breakpoint-tablet
 }
 
 // ============================================
@@ -236,11 +243,11 @@ a {
   margin: auto;
   padding: var(--content-padding);
 
-  @media (min-width: var(--breakpoint-mobile)) {
+  @media (min-width: $breakpoint-mobile) {
     width: var(--content-max-width);
   }
 
-  @media (max-width: var(--breakpoint-mobile)) {
+  @media (max-width: $breakpoint-mobile) {
     width: 100%;
   }
 }
@@ -348,7 +355,7 @@ a {
 #home-card {
   width: var(--card-width);
 
-  @media (max-width: var(--breakpoint-mobile)) {
+  @media (max-width: $breakpoint-mobile) {
     display: none;
   }
 
@@ -465,7 +472,7 @@ a {
       .wrap {
         padding: var(--spacing-2xl);
 
-        @media (min-width: var(--breakpoint-mobile)) {
+        @media (min-width: $breakpoint-mobile) {
           h1 {
             font-size: var(--font-size-5xl);
             font-weight: bold;
@@ -483,7 +490,7 @@ a {
           }
         }
 
-        @media (max-width: var(--breakpoint-mobile)) {
+        @media (max-width: $breakpoint-mobile) {
           padding: var(--spacing-5xl);
 
           h1 {
@@ -511,13 +518,13 @@ a {
       background: var(--color-background-light);
       border-radius: 38% 62% 63% 37%/41% 44% 56% 59%;
 
-      @media (min-width: var(--breakpoint-mobile)) {
+      @media (min-width: $breakpoint-mobile) {
         display: inline-block;
         height: 500px;
         width: 500px;
       }
 
-      @media (max-width: var(--breakpoint-mobile)) {
+      @media (max-width: $breakpoint-mobile) {
         display: none;
       }
 
@@ -546,7 +553,7 @@ a {
       }
     }
 
-    @media (min-width: var(--breakpoint-mobile)) {
+    @media (min-width: $breakpoint-mobile) {
       height: 500px;
       width: 500px;
 
@@ -556,7 +563,7 @@ a {
       }
     }
 
-    @media (max-width: var(--breakpoint-mobile)) {
+    @media (max-width: $breakpoint-mobile) {
       height: min(350px, calc(100vw - 40px));
       width: min(350px, calc(100vw - 40px));
 
@@ -577,7 +584,7 @@ a {
   padding: var(--content-padding);
   max-width: 1200px;
 
-  @media (min-width: var(--breakpoint-mobile)) and (max-width: var(--breakpoint-tablet)) {
+  @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
     width: 800px;
   }
 }
@@ -586,12 +593,12 @@ a {
   margin-right: var(--spacing-5xl);
   width: 850px;
 
-  @media (max-width: var(--breakpoint-mobile)) {
+  @media (max-width: $breakpoint-mobile) {
     margin: auto;
     width: 100%;
   }
 
-  @media (min-width: var(--breakpoint-mobile)) and (max-width: var(--breakpoint-tablet)) {
+  @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
     width: 100%;
   }
 
@@ -605,11 +612,11 @@ a {
     padding: var(--spacing-xl);
     position: relative;
 
-    @media (min-width: var(--breakpoint-mobile)) {
+    @media (min-width: $breakpoint-mobile) {
       padding: var(--spacing-5xl);
     }
 
-    @media (max-width: var(--breakpoint-mobile)) {
+    @media (max-width: $breakpoint-mobile) {
       padding: var(--spacing-xl) var(--spacing-3xl);
       margin-bottom: var(--spacing-3xl);
     }
@@ -618,7 +625,7 @@ a {
       box-shadow: var(--shadow-sm);
       transform: translate(-5px, -5px);
 
-      @media (max-width: var(--breakpoint-mobile)) {
+      @media (max-width: $breakpoint-mobile) {
         transform: none;
       }
     }
@@ -628,7 +635,7 @@ a {
       color: var(--color-link);
       text-align: center;
 
-      @media (max-width: var(--breakpoint-mobile)) {
+      @media (max-width: $breakpoint-mobile) {
         font-size: var(--font-size-xl);
       }
 
@@ -665,7 +672,7 @@ a {
     .description {
       padding: var(--spacing-xl) 0;
 
-      @media (max-width: var(--breakpoint-mobile)) {
+      @media (max-width: $breakpoint-mobile) {
         font-size: var(--font-size-sm);
       }
 
@@ -678,7 +685,7 @@ a {
       line-height: 1.7;
       padding-right: 80px;
 
-      @media (max-width: var(--breakpoint-mobile)) {
+      @media (max-width: $breakpoint-mobile) {
         padding-right: 0;
       }
 
@@ -939,7 +946,7 @@ a {
     border-radius: 10px;
     table-layout: fixed;
 
-    @media (max-width: var(--breakpoint-mobile)) {
+    @media (max-width: $breakpoint-mobile) {
       max-width: 100%;
     }
   }
@@ -1217,14 +1224,14 @@ a {
 }
 
 // 响应式调整
-@media (max-width: var(--breakpoint-mobile)) {
+@media (max-width: $breakpoint-mobile) {
   ul,
   ol {
     padding-left: 20px;
   }
 }
 
-@media (min-width: var(--breakpoint-mobile)) {
+@media (min-width: $breakpoint-mobile) {
   ul,
   ol {
     padding-left: 40px;
