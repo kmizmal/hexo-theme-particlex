@@ -811,6 +811,9 @@ a {
     height: 50vmin;
     width: 50vmin;
     animation: arotate 0.8s linear infinite;
+    // 边缘模糊：整块做高斯模糊，环的内外边缘随之羽化，形成柔和发光的效果。
+    // 环宽需相应加宽（见下方 :after 的 inset），否则 3px 的细环模糊后会淡到看不见。
+    filter: blur(10px);
     h2,
     p,
     img {
@@ -819,12 +822,12 @@ a {
     &:after {
       content: "";
       position: absolute;
-      top: 3px;
-      left: 3px;
-      right: 3px;
-      bottom: 3px;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
       // 与 #loading 背景同色（--color-scrollbar-track），
-      // 让渐变只呈现为一圈干净的圆环，而不是糊成一团的半透明色块。
+      // 让渐变呈现为一圈圆环；配合上面的 blur，环的内外边缘都会被羽化。
       background: #e6efff;
       border-radius: 50%;
     }
