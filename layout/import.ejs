@@ -1,41 +1,50 @@
+<!-- CDN 优选：cdn-config 提供线路与资源表，cdn-race 负责测速并通知 Service Worker。
+     defer 保证按序执行，且不阻塞解析。详见 CDN-RACING.md -->
+<script src="<%- url_for('/js/cdn-config.js') %>" defer></script>
+<script src="<%- url_for('/js/cdn-race.js') %>" defer></script>
+
 <link rel="preconnect" href="https://s4.zstatic.net" />
 <link rel="preconnect" href="https://fonts.googleapis.cn" />
 <link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
 
+<% if (theme.vue && theme.vue.enable) { const vueSri = cdn_sri('vue'); %>
+<!-- Vue：地址取自主题 _config.yml 的 vue 段，integrity 由 cdn_sri() 从 cdn-config.js
+     的 sri 读取。onerror 兜底用同字节的另一条线路，integrity 不需改动即可通过，
+     只用于覆盖首访（SW 尚未接管）这一空窗。 -->
 <script
-  src="https://s4.zstatic.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"
-  integrity="sha384-dXO0tVOGNl1wgAWAtcOqxLmhahhsemOLpJUgOyUx7VUwhfwkaS10/zJAzmaB+wM7"
-  crossorigin="anonymous"
+  src="<%- theme.vue.src %>"
+  <% if (vueSri) { %>integrity="<%- vueSri %>" crossorigin="anonymous"<% } %>
+  <% if (theme.vue.fallback) { %>onerror="this.onerror=null;this.src='<%- theme.vue.fallback %>'"<% } %>
 ></script>
-<link
-  rel="stylesheet"
-  href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://s4.zstatic.net/ajax/libs/firacode/6.2.0/fira_code.css"
-/>
+<% } %>
+<% if (theme.fontAwesome && theme.fontAwesome.enable) { %>
+<link rel="stylesheet" href="<%- theme.fontAwesome.src %>" />
+<% } %>
+<% if (theme.firaCode && theme.firaCode.enable) { %>
+<link rel="stylesheet" href="<%- theme.firaCode.src %>" />
+<% } %>
 
+<% if (theme.jquery && theme.jquery.enable) { const jquerySri = cdn_sri('jquery'); %>
+<!-- jQuery：地址取自主题 _config.yml 的 jquery 段，integrity 由 cdn_sri() 从
+     cdn-config.js 的 sri 读取，哈希全站只有那一个出处。 -->
 <script
-  src="https://s4.zstatic.net/ajax/libs/jquery/3.7.1/jquery.slim.min.js"
-  integrity="sha384-5AkRS45j4ukf+JbWAfHL8P4onPA9p0KwwP7pUdjSQA3ss9edbJUJc/XcYAiheSSz"
-  crossorigin="anonymous"
+  src="<%- theme.jquery.src %>"
+  <% if (jquerySri) { %>integrity="<%- jquerySri %>" crossorigin="anonymous"<% } %>
+  <% if (theme.jquery.fallback) { %>onerror="this.onerror=null;this.src='<%- theme.jquery.fallback %>'"<% } %>
 ></script>
-<% if (theme.polyfill.enable) { %>
-<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=<%- theme.polyfill.features %>"></script>
 <% } %>
 
 <!-- PrismJS -->
 <% if (theme.prismjs.enable) { %>
-<!-- PrismJS 样式 -->
+<!-- 基地址与版本取自主题 _config.yml 的 prismjs.cdn，需与 cdn-config.js 的 prismjs@<version> 一致 -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/prismjs/themes/<%= theme.prismjs.theme %>.min.css"
+  href="<%- theme.prismjs.cdn %>/themes/<%= theme.prismjs.theme %>.min.css"
 />
 <% if (theme.prismjs.lineNumbers) { %>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.css"
+  href="<%- theme.prismjs.cdn %>/plugins/line-numbers/prism-line-numbers.min.css"
 />
 <% } %>
 <!-- PrismJS 高亮脚本 -->

@@ -84,18 +84,46 @@ footer:
 
   visitors:
     enable: true
-# Polyfill（实际通过 alicdn 镜像加载，已规避被劫持的 polyfill.io 域名；现代浏览器可设 enable: false 关闭）
-# https://polyfill.alicdn.com
-polyfill:
+# 外链资源
+# 地址同样由 SW 按最快线路接管（见 CDN-RACING.md）。这里的 src 必须落在
+# cdn-config.js 对应资源的 bases 覆盖范围内，否则该文件只能直连、不参与优选；
+# 构建期会检查并告警。
+#
+# 注意：这里只写地址，不写 SRI 哈希。integrity 由模板调用 cdn_sri() 从
+# cdn-config.js 的 resources[].sri 读取，哈希全站只有那一个出处。
+fontAwesome:
   enable: true
-  features:
-    - default
+  src: https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css
+
+firaCode:
+  enable: true
+  src: https://s4.zstatic.net/ajax/libs/firacode/6.2.0/fira_code.css
+
+# jQuery（slim 版）
+# fallback 选另一条字节一致的线路，仅用于首访（SW 未接管时）兜底
+jquery:
+  enable: true
+  src: https://s4.zstatic.net/ajax/libs/jquery/3.7.1/jquery.slim.min.js
+  fallback: https://fastly.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js
+
+# Vue 3 全局构建（主题 UI 依赖）
+# 两处取值必须与 source/js/cdn-config.js 里 vue@<version> 条目对应：
+#   src       取值于 resources[key].bases 中任一条线路 + /vue.global.prod.js
+#   fallback  另一条同字节线路，仅供首访（SW 未接管时）兜底，integrity 无需变更
+# 哈希不写在这里：模板用 cdn_sri('vue') 从 cdn-config.js 取，改版本只改那一处。
+# 注意：不要指向 s4.zstatic.net / cdnjs —— 它们的 Vue 是另一套构建，字节不同。
+vue:
+  enable: true
+  src: https://cdn.jsdelivr.net/npm/vue@3.5.22/dist/vue.global.prod.js
+  fallback: https://gcore.jsdelivr.net/npm/vue@3.5.22/dist/vue.global.prod.js
 
 # https://prismjs.com/examples.html
 prismjs:
   enable: true
   theme: prism-tomorrow
   lineNumbers: true
+  # 样式与插件的基地址；版本需与 cdn-config.js 的 prismjs@<version> 一致
+  cdn: https://cdn.jsdelivr.net/npm/prismjs@1.29.0
 
 # 代码高亮说明：本主题高亮由 Hexo 原生 syntax_highlighter(PrismJS) 负责。
 # 以下 highlight(自定义 hljs) 已弃用，保留开关仅作占位，请勿开启（开启会与 PrismJS 冲突）。

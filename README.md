@@ -16,7 +16,6 @@
 
 ```bash
 git clone https://github.com/kmizmal/hexo-theme-particlex.git ./themes/particlex
-pnpm add sass hexo-renderer-sass-next
 ```
 参考[配置](#3-配置)完成配置   
 然后在根目录 `_config.yml` 设置主题为 ParticleX
@@ -148,22 +147,16 @@ footer:
 
 ## 3.3. 功能配置
 
-### 3.3.1. Polyfill
+### 3.3.1. Polyfill（已移除）
 
-使用 [Polyfill.io](https://polyfill.io) 自动根据 UA 处理新的 JS API 兼容。
+主题不再加载 polyfill.io / alicdn 的补丁脚本，原因：
 
-可以配合 [Hexo-Babel](https://github.com/theme-particlex/hexo-babel) 插件处理 JS 语法兼容。
+- 主题脚本本身使用 ES2015+ 语法（`const`/`let`/箭头函数），Vue 3 也不支持 IE11；
+  能解析这些语法的浏览器，ES2015 运行时 API 本来就齐全，补丁补不了语法层面的缺失。
+- 该脚本在 `<head>` 内同步加载，会额外阻塞首屏一次跨域往返；且 polyfill.io v3 的
+  UA 库停留在 2021 年，对新型号 UA 一律下发保守全量包（实测 Chrome 130 仍返回约 24KB）。
 
-Polyfill 在国内一些省份被墙，这里换成了阿里的 [Polyfill](https://polyfill.alicdn.com)。
-
-```yaml
-# Polyfill
-# https://polyfill.io
-polyfill:
-    enable: true
-    features:
-        - default
-```
+确有旧浏览器需求时，请自行补回并优先自托管，参考 [Polyfill.io](https://polyfill.io)。
 
 ### 3.3.2. 代码高亮
 

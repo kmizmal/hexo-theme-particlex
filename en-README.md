@@ -145,17 +145,19 @@ footer:
 
 ## 3.3 Features
 
-### 3.3.1 Polyfill
+### 3.3.1 Polyfill (removed)
 
-Using [Polyfill.io](https://polyfill.io) to automatically provide JS compatibility by UA.
-Replaced with Alibaba mirror for better access in China.
+The theme no longer loads the polyfill.io / alicdn patch script:
 
-```yaml
-polyfill:
-  enable: true
-  features:
-    - default
-```
+- Theme scripts already use ES2015+ syntax (`const`/`let`/arrow functions) and Vue 3
+  does not support IE11. Any browser able to parse that syntax already has the ES2015
+  runtime APIs, and a polyfill cannot fix syntax-level gaps.
+- The script was loaded synchronously in `<head>`, costing an extra cross-origin round
+  trip before first paint. polyfill.io v3's UA database stalled in 2021, so unknown and
+  newer UAs receive the conservative full bundle (measured ~24 KB for Chrome 130).
+
+Add it back yourself if you really need legacy browsers, preferably self-hosted.
+See [Polyfill.io](https://polyfill.io).
 
 ### 3.3.2 Code Highlighting
 
