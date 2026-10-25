@@ -177,7 +177,11 @@ function sanitizeChain(chain) {
 
 /* ---------------- 工具 ---------------- */
 
-function fetchWithTimeout(url, timeout) {
+/*
+ * noCors 为 true 时用 no-cors 取回：适用于不返回 Access-Control-Allow-Origin 的站点
+ * （例如自建图床）。此时拿到的是 opaque 响应，读不到状态码也读不到 body。
+ */
+function fetchWithTimeout(url, timeout, noCors) {
   return new Promise(function (resolve, reject) {
     var settled = false;
     var timer = self.setTimeout(function () {
@@ -187,7 +191,7 @@ function fetchWithTimeout(url, timeout) {
     }, timeout || 3000);
 
     fetch(url, {
-      mode: 'cors',
+      mode: noCors ? 'no-cors' : 'cors',
       credentials: 'omit',
       redirect: 'follow'
     }).then(function (response) {
@@ -202,6 +206,13 @@ function fetchWithTimeout(url, timeout) {
       reject(error);
     });
   });
+}
+
+// opaque 响应拿不到状态码，只能认为"取回成功"；其余按 2xx 判断
+function isUsable(response) {
+  if (!response) return false;
+  if (response.type === 'opaque') return true;
+  return response.ok;
 }
 
 // 只保留与内容解释直接相关的响应头，避免把上游的 content-length / content-encoding
@@ -272,23 +283,38 @@ function respond(request, target, chain, index) {
     });
   }
 
+  var resource = target.resource;
   var provider = chain[index];
-  var upstream = target.resource.bases[provider] + '/' + target.rest;
-  var cacheName = CACHE_PREFIX + provider;
-  var cacheKey = self.location.origin + CDN_PREFIX + target.resource.key + '/' + target.rest;
+  var upstream = resource.bases[provider] + '/' + target.rest;
 
   function failover() {
     return respond(request, target, chain, index + 1);
   }
 
+  function fetchUpstream() {
+    return fetchWithTimeout(upstream, CONFIG.fetchTimeout, resource.noCors).then(function (response) {
+      if (!isUsable(response)) return failover();
+      return verifyIntegrity(response, resource.sri).then(function (verified) {
+        return verified || failover();
+      });
+    }, failover);
+  }
+
+  // cache: false 的资源（如图片）只选路、不落 Cache：
+  // 体积大，按线路各存一份会成倍占用配额，交给浏览器 HTTP 缓存更合适
+  if (resource.cache === false) return fetchUpstream();
+
+  var cacheName = CACHE_PREFIX + provider;
+  var cacheKey = self.location.origin + CDN_PREFIX + resource.key + '/' + target.rest;
+
   return caches.open(cacheName).then(function (cache) {
     return cache.match(cacheKey).then(function (cached) {
       if (cached) return cached;
 
-      return fetchWithTimeout(upstream, CONFIG.fetchTimeout).then(function (response) {
-        if (!response || !response.ok) return failover();
+      return fetchWithTimeout(upstream, CONFIG.fetchTimeout, resource.noCors).then(function (response) {
+        if (!isUsable(response)) return failover();
 
-        return verifyIntegrity(response, target.resource.sri).then(function (verified) {
+        return verifyIntegrity(response, resource.sri).then(function (verified) {
           if (!verified) return failover();
           return putCache(cache, cacheKey, verified).then(function () {
             return verified;

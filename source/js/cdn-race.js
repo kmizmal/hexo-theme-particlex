@@ -115,15 +115,17 @@
         }, CONFIG.probeTimeout);
 
         // cache: 'no-store' 让请求绕过浏览器缓存，否则命中本地缓存会让所有线路都显示 ~0ms
+        // noCors 线路（自建图床等不返回 CORS 头的站点）只能取 opaque 响应，读不到状态码
         self.fetch(provider.probe, {
-          mode: 'cors',
+          mode: provider.noCors ? 'no-cors' : 'cors',
           cache: 'no-store',
           credentials: 'omit'
         }).then(function (response) {
           if (settled) return;
           settled = true;
           self.clearTimeout(timer);
-          if (response && response.ok) samples.push(nowMs() - started);
+          var usable = response && (response.type === 'opaque' || response.ok);
+          if (usable) samples.push(nowMs() - started);
           next();
         }, function () {
           if (settled) return;

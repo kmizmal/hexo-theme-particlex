@@ -30,10 +30,20 @@
 | `gcore` | `gcore.jsdelivr.net`（Gcore） | npm | 同上 |
 | `testingcf` | `testingcf.jsdelivr.net`（Cloudflare 备用节点） | npm | 同上 |
 | `unpkg` | `unpkg.com` | npm | 同上 |
+| `eo` | `img.zmal.top`（腾讯 EdgeOne，图床） | 图床 | 一张 2KB 图标 |
+| `esa` | `imgs.zmal.top`（阿里云 ESA，图床） | 图床 | 同上 |
+| `cf` | `imgcf.zmal.top`（Cloudflare，图床） | 图床 | 同上 |
 
-六条线路均返回 `Access-Control-Allow-Origin: *`，SW 可以用 CORS 方式回源、读到真实状态码（能识别 404 并切换），也能读 body 做 SRI 校验。
+前六条均返回 `Access-Control-Allow-Origin: *`，SW 可以用 CORS 方式回源、读到真实状态码（能识别 404 并切换），也能读 body 做 SRI 校验。
 `gcore` 与 `testingcf` 是国内访问 jsDelivr 时常用的两个备用入口，与主站同源同内容，纳入后测速覆盖更完整。
 `cdn.bootcdn.net` 实测不可达、`registry.npmmirror.com` 不返回 CORS 头，均未纳入。
+
+最后三条是图床（`img.zmal.top` / `imgs.zmal.top` / `imgcf.zmal.top`），它们只服务 `img` 一个资源。
+三者内容一致（同一文件 sha256 相同），但响应头不同：EdgeOne 侧带 `immutable`、ESA 侧不返回
+`Cache-Control`、Cloudflare 侧返回 `max-age=43200, must-revalidate` 且**唯一返回了 CORS 头**。
+由于 `noCors` 是资源级开关，而另两台不支持 CORS，Cloudflare 这条也统一按 `no-cors` 处理
+（opaque 响应不影响 `<img>` 使用）。图床线路与代码 CDN 共用同一份测速排序，但 `chainFor()`
+会按资源过滤，互不污染。
 
 ## 受管资源
 
@@ -45,6 +55,7 @@
 | `vue@3.5.22` | `vue.global.prod.js`，带 SRI；**只挂 npm 家族**（见下） |
 | `jquery@3.7.1` | `jquery.slim.min.js`，带 SRI |
 | `twikoo@1.6.44` | `twikoo.min.js`，带 SRI |
+| `img` | 图床全部图片；`cache: false`（只选路不缓存）、`noCors: true`（opaque 取回）。匹配靠 bases 前缀 + 剩余路径，不需要枚举文件 |
 
 ### Vue 为什么把 zstatic 剔除了
 
@@ -102,6 +113,10 @@ Vue 3.5.22 在公开 CDN 上存在**两个不同构建**，不是同一文件的
 - **回退顺序**：偏好线路 → 其余线路 → 浏览器原始请求。单次回源超时 3000ms。
 - **缓存隔离**：`cdn-<版本>-<线路>`，每条线路独立；`version` 递增时清理其余版本。
 - **SRI 校验**：配置里声明了 `sri` 的资源，SW 会把响应读全并校验 sha384，不一致就换下一条线路，且不写入缓存。
+- **`cache: false`**：只选路、不写 Cache API（当前用于图床）。图片体积大，按线路各存一份会成倍占配额；
+  是否长期缓存交由浏览器 HTTP 缓存决定。
+- **`noCors: true`**：以 `no-cors` 回源，拿到 opaque 响应。适用于不返回 CORS 头的站点；
+  代价是读不到状态码，404 会被当作成功（见「已知限制」）。
 - **总开关**：`cdn-config.js` 的 `enable: false` 后 SW 不再拦截任何请求。
 
 ## 维护步骤
@@ -150,4 +165,11 @@ Vue 3.5.22 在公开 CDN 上存在**两个不同构建**，不是同一文件的
 1. **首屏不可能已经优选**：测速必然晚于首批资源请求，因此首访（以及偏好刚过期的那次）用默认或已存偏好线路。
 2. **Vue 首访没有国内线路**：npm 家族里没有可用的国内 CORS 源，首访固定走 jsDelivr，仅靠标签上的 `onerror` 退到 gcore；SW 接管后才有多线路优选。要彻底解决需自托管同字节副本。
 3. **`@font-face` 跟随 CSS 的解析基准**：CSS 直接从 CDN 返回时，字体直连该线路；CSS 命中 Cache 时，字体以 `/cdn/<key>/<rest>` 解析并由 SW 接管，两种路径都可用。
-4. **Gitalk / Waline / KaTeX / crypto-js**：主题里默认关闭，启用后需自行把地址补进 `resources`（同样先比对字节一致性）。
+4. **图床是 opaque 响应**：三台图床里 EdgeOne 与 ESA 都不返回 CORS 头（Cloudflare 返回，但受资源级
+   `noCors` 约束），SW 读不到状态码。只有在网络层失败（超时、连接失败）时才会回退；
+   若某条线路返回 404/403，SW 察觉不到，会把失败的响应直接交给浏览器。内容一致性需人工保证。
+5. **图片不参与 SW 缓存**：`cache: false`，重复访问时的命中与否由浏览器 HTTP 缓存决定。
+   三台的缓存策略目前不一致：EdgeOne `immutable`、ESA 不返回 `Cache-Control`（只能启发式缓存）、
+   Cloudflare `max-age=43200, must-revalidate`（每天至少回源校验两次）。
+   建议把 ESA 补成 `public, max-age=31536000, immutable`，云侧策略对齐后再比较线路优劣才有意义。
+6. **Gitalk / Waline / KaTeX / crypto-js**：主题里默认关闭，启用后需自行把地址补进 `resources`（同样先比对字节一致性）。

@@ -22,7 +22,7 @@
 
   var CONFIG = {
     /* 配置版本：参与 SW 缓存命名空间，改动资源或线路时递增 */
-    version: '2026-10-24.3',
+    version: '2026-10-25.2',
 
     /* 总开关：设为 false 后 SW 不再拦截任何请求，并清空自身缓存 */
     enable: true,
@@ -77,6 +77,35 @@
         id: 'unpkg',
         label: 'unpkg',
         probe: 'https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js'
+      },
+      {
+        /*
+         * 图床双线路：两台都是国内服务（腾讯 EdgeOne / 阿里云 ESA），
+         * 同一个文件在两边路径、字节完全一致。
+         * 这两个站点不返回 Access-Control-Allow-Origin，因此探针与回源都必须用
+         * no-cors（拿 opaque 响应，只能测时间、无法读状态码）。
+         */
+        id: 'eo',
+        label: '图床 · EdgeOne',
+        noCors: true,
+        probe: 'https://img.zmal.top/2025/0905/Arrow.175qf571ue.ico'
+      },
+      {
+        id: 'esa',
+        label: '图床 · 阿里云 ESA',
+        noCors: true,
+        probe: 'https://imgs.zmal.top/2025/0905/Arrow.175qf571ue.ico'
+      },
+      {
+        /*
+         * Cloudflare 这条线路其实返回 Access-Control-Allow-Origin: *，
+         * 但同一资源下的另两台不返回，而 noCors 是资源级开关，
+         * 因此这里仍按 no-cors 处理；opaque 响应不影响 <img> 使用。
+         */
+        id: 'cf',
+        label: '图床 · Cloudflare',
+        noCors: true,
+        probe: 'https://imgcf.zmal.top/2025/0905/Arrow.175qf571ue.ico'
       }
     ],
 
@@ -166,6 +195,27 @@
           gcore: 'https://gcore.jsdelivr.net/npm/twikoo@1.6.44/dist',
           testingcf: 'https://testingcf.jsdelivr.net/npm/twikoo@1.6.44/dist',
           unpkg: 'https://unpkg.com/twikoo@1.6.44/dist'
+        }
+      },
+      {
+        /*
+         * 图床：三个域名指向同一份内容（路径、字节一致，已用 sha256 比对）。
+         * key 只用于日志与合成路径，实际匹配靠 bases 前缀 + 剩余路径，因此
+         * 不需要枚举具体文件。
+         *
+         * cache: false —— 图片体积大，按线路各存一份会成倍占用 Cache Storage，
+         *   交给浏览器 HTTP 缓存即可，SW 只负责选路与回退。
+         * noCors: true —— 其中两台不返回 Access-Control-Allow-Origin，
+         *   只能以 opaque 响应取回；代价是无法通过状态码判断 404。
+         */
+        key: 'img',
+        note: '图床图片；只选路不缓存，opaque 取回',
+        cache: false,
+        noCors: true,
+        bases: {
+          eo: 'https://img.zmal.top',
+          esa: 'https://imgs.zmal.top',
+          cf: 'https://imgcf.zmal.top'
         }
       }
     ]
