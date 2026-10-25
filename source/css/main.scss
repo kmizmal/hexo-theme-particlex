@@ -600,6 +600,16 @@ a {
   }
 }
 
+// ============================================
+// 卡片「阅读全文」按钮的占位尺寸
+// ============================================
+// .go-post 在卡片右下角绝对定位（bottom: -5px），其高度不受文档流影响。
+// 桌面端依靠 .post 的 50px 底部内边距天然避让，移动端内边距只有 20px，
+// 按钮会凸出到内容区并与 .post-tags 重叠，故用下面这组尺寸显式预留空间。
+$go-post-height: 52px; // 20px 行高 + 16px×2 纵向内边距
+$go-post-overhang: 5px; // bottom: -5px 外露到卡片外的部分
+$go-post-clearance: $go-post-height - $go-post-overhang + 12px; // 凸出 47px + 12px 间隙 = 59px
+
 #home-posts {
   margin-right: var(--spacing-5xl);
   width: 850px;
@@ -629,6 +639,9 @@ a {
 
     @media (max-width: $breakpoint-mobile) {
       padding: var(--spacing-xl) var(--spacing-3xl);
+      // 移动端底部内边距不足以避让右下角的「阅读全文」按钮，
+      // 否则按钮会盖住 .post-tags 的最后一行（见 $go-post-clearance 注释）。
+      padding-bottom: $go-post-clearance;
       margin-bottom: var(--spacing-3xl);
     }
 
@@ -720,6 +733,9 @@ a {
       color: #fff;
       font-size: var(--font-size-sm);
       font-weight: bold;
+      // 固定行高使按钮高度恒为 $go-post-height，避免字体回退导致高度漂移、
+      // 进而使 $go-post-clearance 预留的空间失准。
+      line-height: 20px;
       padding: var(--spacing-lg) var(--spacing-3xl);
       position: absolute;
       right: -5px;
